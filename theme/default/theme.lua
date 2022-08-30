@@ -33,6 +33,11 @@ theme.border_color_normal = '#000000'
 theme.border_color_active = '#535d6c'
 theme.border_color_marked = '#91231c'
 
+theme.widget_enter   = '#FFFFFF'
+theme.widget_press   = '#FF0000'
+theme.widget_leave   = theme.transparent
+theme.widget_release = '#000000'
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -80,6 +85,8 @@ theme.layout_max = themes_path..'default/layouts/maxw.png'
 theme.layout_fullscreen = themes_path..'default/layouts/fullscreenw.png'
 theme.layout_spiral  = theme_dir .. 'icons/assets/layouts/spiral.png'
 
+theme.tasklist_plain_task_name = true
+
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
@@ -87,7 +94,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = 'Tela-blue-dark'
 
 -- Set different colors for urgent notifications.
 rnotification.connect_signal('request::rules', function()

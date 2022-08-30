@@ -1,5 +1,5 @@
--- Init the top-panel.
+local topp = require('layout.topp')
 
-local top_panel = require('layout.top-panel')
-
-screen.connect_signal('request::desktop_decoration', top_panel)
+screen.connect_signal('request::desktop_decoration', function(scr)
+	scr.top_panel = topp(scr, false)
+end)

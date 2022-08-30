@@ -24,6 +24,11 @@ config_dir = gears.filesystem.get_configuration_dir()        -- GLOBAL
 
 dpi = beautiful.xresources.apply_dpi    -- GLOBAL
 
+-- Default font.
+-- I like Ubuntu fonts.
+
+default_font = 'Ubuntu' .. ' '
+
 -- Init main theme.
 
 require('theme')
