@@ -3,7 +3,7 @@ local widget_icon_dir = config_dir .. 'widget/panel/assets/'
 local widget = wibox.widget {
 	{
 		id     = 'icon',
-		image  = widget_icon_dir .. 'right-arrow' .. '.svg',
+		image  = widget_icon_dir .. 'left-arrow' .. '.svg',
 		widget = wibox.widget.imagebox,
 		resize = true
 	},
@@ -23,7 +23,7 @@ local widget_button = wibox.widget {
 		widget = require('widget.style.clickable-widget')
 	},
 
-	margins = dpi(6),
+	margins = dpi(10),
 	widget  = wibox.container.margin
 }
 
@@ -33,9 +33,9 @@ widget_button:buttons(gears.table.join(
 	end)
 ))
 
--- Listen to signal.
+-- Response to signal.
 
-awesome.connect_signal('widget::systray:toggle',function()
+awesome.connect_signal('widget::systray:toggle', function()
 	if screen.primary.systray then
 		if not screen.primary.systray.visible then
 			widget.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. 'left-arrow.svg'))

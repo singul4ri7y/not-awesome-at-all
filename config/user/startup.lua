@@ -6,6 +6,7 @@ return {
 	'ibus-daemon --xim',
 	'/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1',
 	'xfce4-power-manager',
+	'copyq --start-server',
 	--'conky -c ~/.config/conky/Graffias/Graffias.conf'
 	--'xidlehook'
 }

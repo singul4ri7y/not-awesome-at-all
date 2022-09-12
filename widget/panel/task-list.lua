@@ -46,13 +46,12 @@ local function custom_template(args)
 		'layout with a "get_children_by_id" method')
 
 	return {
-		ib              = l:get_children_by_id('icon_role')[1],
-		tb              = l:get_children_by_id('text_role')[1],
-		cb              = l:get_children_by_id('close_button_role')[1],
-		bgb             = l:get_children_by_id('background_role')[1],
-		tbm             = l:get_children_by_id('text_margin_role')[1],
-		ibm             = l:get_children_by_id('icon_margin_role')[1],
-		cbm             = l:get_children_by_id('close_button_margin_role')[1],
+		ib              = l:get_children_by_id('template_icon')[1],
+		tb              = l:get_children_by_id('template_text')[1],
+		bgb             = l:get_children_by_id('template_background')[1],
+		tbm             = l:get_children_by_id('template_text_margin')[1],
+		ibm             = l:get_children_by_id('template_icon_margin')[1],
+		cbm             = l:get_children_by_id('template_close_margin')[1],
 		primary         = l,
 		update_callback = l.update_callback,
 		create_callback = l.create_callback,
@@ -60,51 +59,70 @@ local function custom_template(args)
 end
 
 local usable_template = {
-	id = 'background_role',
-	border_strategy = 'inner',
-	stretch = false,
+	id     = 'template_background',
 	widget = wibox.container.background,
 	
 	{
-		widget = wibox.layout.fixed.horizontal,
-		fill_space = true,
+		id     = 'template_clickable',
+		widget = clickable_widget,
+
 		{
-			id = 'icon_margin_role',
-			widget = wibox.container.margin,
-			margins = dpi(10),
+			id     = 'template_task',
+			layout = wibox.layout.fixed.horizontal,
+
 			{
-				id = 'icon_role',
-				widget = wibox.widget.imagebox,
-				left = dpi(4),
-			},
-		},
-		{
-			id = 'text_margin_role',
-			widget = wibox.container.margin,
-			left = dpi(4),
-			right = dpi(4),
-			{
-				id = 'text_role',
-				widget = wibox.widget.textbox,
-			},
-		},
-		{
-			id = 'clickable_close_button_margin_role',
-			widget = wibox.container.margin,
-			margins = dpi(13),
-			{
-				id = 'clickable_close_button_role',
-				widget = clickable_widget,
+				id         = 'template_info',
+				layout     = wibox.layout.fixed.horizontal,
+				fill_space = true,
 
 				{
-					id = 'close_button_margin_role',
-					widget = wibox.container.margin,
-					shape = gears.shape.circle,
-					margins = dpi(5),
+					id      = 'template_icon_margin',
+					widget  = wibox.container.margin,
+					margins = dpi(12),
+
 					{
-						id = 'close_button_role',
-						image = icons.close,
-						widget = wibox.widget.imagebox
+						id     = 'template_icon',
+						widget = wibox.widget.imagebox,
+						left   = dpi(4)
+					}
+				},
+
+				{
+					id     = 'template_text_margin',
+					widget = wibox.container.margin,
+					left   = dpi(4),
+					right  = dpi(4),
+
+					{
+						id     = 'template_text',
+						widget = wibox.widget.textbox
+					}
+				}
+			},
+
+			-- Close button.
+
+			{
+				id      = 'template_close_margin',
+				widget  = wibox.container.margin,
+				left    = dpi(4),
+				right   = dpi(8),
+				top     = dpi(12),
+				bottom  = dpi(12),
+
+				{
+					widget = clickable_widget,
+					shape  = gears.shape.circle,
+
+					{
+						widget  = wibox.container.margin,
+						margins = dpi(4),
+
+						{
+							widget = wibox.widget.imagebox,
+							image  = icons.close,
+							resize = true
+						}
 					}
 				}
 			}
@@ -201,7 +219,7 @@ local function list_update(w, buttons, label, data, objects, args)
 
 		if o.minimized then window_indicators = minimized_indicator .. window_indicators end
 
-		base_text = (window_indicators == '' and '' or '(' .. window_indicators .. ') ') .. base_text
+		base_text = (window_indicators == '' and '' or '[' .. window_indicators .. '] ') .. base_text
 
 		if utf8.len(base_text) > 25 then
 			text = text:gsub('>(.-)<', '>' .. base_text:sub(1, utf8.offset(base_text, 23) - 1) .. '...<')
@@ -213,6 +231,7 @@ local function list_update(w, buttons, label, data, objects, args)
 		end
 
 		-- The text might be invalid, so use pcall.
+
 		if cache.tbm and (text == nil or text == '') then
 			cache.tbm:set_margins(0)
 		elseif cache.tb then
@@ -241,7 +260,6 @@ local function list_update(w, buttons, label, data, objects, args)
 			cache.bgb.shape        = item_args.shape
 			cache.bgb.border_width = item_args.shape_border_width
 			cache.bgb.border_color = item_args.shape_border_color
-
 		end
 
 		if cache.ib and icon then
@@ -301,6 +319,7 @@ return function(scr)
 		filter          = awful.widget.tasklist.filter.currenttags,
 		buttons         = tasklist_buttons,
 		update_function = list_update,
+		layout          = wibox.layout.fixed.horizontal(),
 		widget_template = usable_template
 	}
 end

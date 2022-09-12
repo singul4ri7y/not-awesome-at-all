@@ -93,6 +93,7 @@ screen.connect_signal('request::desktop_decoration', function(scr)
 			icon_only         = true,
 			layout            = tag.layout or awful.layout.suit.spiral,
 			gap_single_client = true,
+			default_app       = tag.default_app,
 			gap               = tag.gap,
 			screen            = scr,
 			selected          = i == 1
