@@ -1,40 +1,12 @@
 local clickable_widget = require('widget.style.clickable-widget')
 local icons            = require('theme.icons')
+local create_buttons   = require('awful.widget.common').create_buttons
 
--- Below codes are copied from /usr/share/awesome/lib/awful/widget/common.lua
+-- Lines below are copied from /usr/share/awesome/lib/awful/widget/common.lua
 -- and edited.
 
-local capi   = { button = button }
 local base   = require('wibox.widget.base')
 local gdebug = require('gears.debug')
-
-local function create_buttons(buttons, object)
-	local is_formatted = buttons and buttons[1] and (
-		type(buttons[1]) == "button" or buttons[1]._is_capi_button) or false
-
-	if buttons then
-		local btns = {}
-		for _, src in ipairs(buttons) do
-			--TODO v6 Remove this legacy overhead.
-			
-			for _, b in ipairs(is_formatted and { src } or src) do
-				-- Create a proxy button object: it will receive the real
-				-- press and release events, and will propagate them to the
-				-- button object the user provided, but with the object as
-				-- argument.
-
-				local btn = capi.button { modifiers = b.modifiers, button = b.button }
-
-				btn:connect_signal('press', function() b:emit_signal('press', object) end)
-				btn:connect_signal('release', function() b:emit_signal('release', object) end)
-
-				btns[#btns + 1] = btn
-			end
-		end
-
-		return btns
-	end
-end
 
 local function custom_template(args)
 	local l = base.make_widget_from_value(args.widget_template)
@@ -175,7 +147,6 @@ local function list_update(w, buttons, label, data, objects, args)
 			end
 
 			cache.tt = awful.tooltip {
-				objects    = { tb },
 				mode       = 'outside',
 				align      = 'bottom',
 				delay_show = 0.5

@@ -13,13 +13,15 @@ local theme_dir = gears.filesystem.get_configuration_dir() .. 'theme/'
 
 local theme = {}
 
-theme.font          = 'Ubuntu Medium 9'
+theme.font          = 'Ubuntu NF Medium 10'
 
 theme.bg_normal     = '#222222'
 theme.bg_focus      = '#535d6c'
 theme.bg_urgent     = '#ff0000'
 theme.bg_minimize   = '#444444'
 theme.bg_systray    = theme.bg_normal
+
+theme.transparent   = theme.bg_normal .. '00'
 
 theme.fg_normal     = '#aaaaaa'
 theme.fg_focus      = '#ffffff'
@@ -91,6 +93,10 @@ theme.tasklist_plain_task_name = true
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
+
+-- Systray.
+
+theme.systray_icon_spacing = dpi(2)
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

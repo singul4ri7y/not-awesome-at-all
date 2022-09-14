@@ -27,7 +27,7 @@ dpi = beautiful.xresources.apply_dpi    -- GLOBAL
 -- Default font.
 -- I like Ubuntu fonts.
 
-default_font = 'Ubuntu' .. ' '
+default_font = 'Ubuntu NF' .. ' '
 
 -- Init main theme.
 

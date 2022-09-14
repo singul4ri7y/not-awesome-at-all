@@ -1,9 +1,9 @@
-local widget_icon_dir = config_dir .. 'widget/panel/assets/'
+local widget_icon_dir = config_dir .. 'widget/panel/tray-toggler/assets/'
 
 local widget = wibox.widget {
 	{
 		id     = 'icon',
-		image  = widget_icon_dir .. 'left-arrow' .. '.svg',
+		image  = widget_icon_dir .. 'left-arrow.svg',
 		widget = wibox.widget.imagebox,
 		resize = true
 	},
@@ -24,6 +24,8 @@ local widget_button = wibox.widget {
 	},
 
 	margins = dpi(10),
+	left    = dpi(5),
+	right   = dpi(15),
 	widget  = wibox.container.margin
 }
 
