@@ -44,3 +44,7 @@ require('config')
 -- Init layout.
 
 require('layout')
+
+-- Collect garbage
+
+collectgarbage('collect')

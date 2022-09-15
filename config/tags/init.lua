@@ -101,7 +101,7 @@ screen.connect_signal('request::desktop_decoration', function(scr)
 	end
 end)
 
--- TODO: Code will be added in the future.
+local hidden = false
 
 local function update_gap_and_shape(tag) 
 	-- Get the current tag layout.
@@ -109,13 +109,29 @@ local function update_gap_and_shape(tag)
 	local layout = awful.tag.getproperty(tag, 'layout')
 
 	-- Use no gap between clients in 'max' and 'fullscreen' layout.
+	-- Hide panels for fullscreen layout.
+
+	if layout == awful.layout.suit.max.fullscreen then
+		hidden = true
+
+		for scr in screen do
+			screen.emit_signal('panel::hide', scr)
+		end
+	elseif hidden then
+		for scr in screen do
+			screen.emit_signal('panel::show', scr)
+		end
+	end
 
 	if layout == awful.layout.suit.max or layout == awful.layout.suit.max.fullscreen then
 		tag.gap = beautiful.no_gap
-	else tag.gap = beautiful.useless_gap end
+	else
+		tag.gap = beautiful.useless_gap
+	end
 end
 
--- Change client's gap and shape on layout change.
+-- Change client's gap, shape, borders on layout change.
+-- Also hide panels if needed.
 
 tag.connect_signal('property::layout', update_gap_and_shape)
 

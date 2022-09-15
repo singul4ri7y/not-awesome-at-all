@@ -10,6 +10,26 @@ screen.connect_signal('request::desktop_decoration', function(scr)
 	end
 end)
 
+-- Response to hide/show signals.
+-- Those signals are emitted when 
+-- fullscreen layout is enabled.
+
+screen.connect_signal('panel::hide', function(scr)
+	scr.top_panel.visible = false
+
+	if scr.left_panel then
+		scr.left_panel.visible = false
+	end
+end)
+
+screen.connect_signal('panel::show', function(scr)
+	scr.top_panel.visible = true
+
+	if scr.left_panel then
+		scr.left_panel.visible = true
+	end
+end)
+
 -- Hide bars when app go fullscreen.
 
 function update_bars_visibility()

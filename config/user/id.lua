@@ -1,17 +1,13 @@
--- Base username.
-
-local uname = os.getenv('USER')
-
 local id = {
-	-- Uppercase user name.
-
-	username = uname:gsub('^%l', string.upper)
+	username = os.getenv('USER')
 }
 
 -- Get the user full name.
 
-awful.spawn.easy_async_with_shell('getent passwd "' .. uname .. '" | cut -d ":" -f 5 | cut -d "," -f 1', function(stdout)
-	id.fullname = stdout
-end)
+local file = io.popen('getent passwd "' .. id.username .. '" | cut -d ":" -f 5 | cut -d "," -f 1')
+
+id.fullname = file:read('*a'):gsub('\n$', '')
+
+file:close()
 
 return id

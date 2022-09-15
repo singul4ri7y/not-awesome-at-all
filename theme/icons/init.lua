@@ -28,8 +28,8 @@ return {
 	-- Others.
 
 	search      = icon_dir .. 'magnify.svg',
-	volume      = icon_dir .. 'volume-high.svg',
-	brightness  = icon_dir .. 'brightness-7.svg',
+	volume      = icon_dir .. 'volume.svg',
+	brightness  = icon_dir .. 'brightness.svg',
 	chart       = icon_dir .. 'chart-areaspline.svg',
 	memory      = icon_dir .. 'memory.svg',
 	harddisk    = icon_dir .. 'harddisk.svg',

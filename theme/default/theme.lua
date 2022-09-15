@@ -15,18 +15,21 @@ local theme = {}
 
 theme.font          = 'Ubuntu NF Medium 10'
 
-theme.bg_normal     = '#222222'
-theme.bg_focus      = '#535d6c'
-theme.bg_urgent     = '#ff0000'
-theme.bg_minimize   = '#444444'
-theme.bg_systray    = theme.bg_normal
+theme.bg_normal   = '#222222'
+theme.bg_focus    = '#535d6c'
+theme.bg_urgent   = '#ff0000'
+theme.bg_minimize = '#444444'
+theme.bg_systray  = theme.bg_normal
 
-theme.transparent   = theme.bg_normal .. '00'
+theme.groups_bg       = '#ffffff' .. '10'
+theme.groups_title_bg = '#ffffff' .. '15'
 
-theme.fg_normal     = '#aaaaaa'
-theme.fg_focus      = '#ffffff'
-theme.fg_urgent     = '#ffffff'
-theme.fg_minimize   = '#ffffff'
+theme.transparent = theme.bg_normal .. '00'
+
+theme.fg_normal   = '#aaaaaa'
+theme.fg_focus    = '#ffffff'
+theme.fg_urgent   = '#ffffff'
+theme.fg_minimize = '#ffffff'
 
 theme.useless_gap         = dpi(4)
 theme.no_gap              = dpi(0)
@@ -82,7 +85,7 @@ theme.menu_width  = dpi(100)
 theme.wallpaper = theme_dir .. 'wallpapers/assets/silhouette-of-trees.jpg'
 
 -- You can use your own layout icons like this:
-theme.layout_floating  = themes_path..'default/layouts/floatingw.png'
+theme.layout_floating  = theme_dir .. 'icons/assets/layouts/floating.png'
 theme.layout_max = themes_path..'default/layouts/maxw.png'
 theme.layout_fullscreen = themes_path..'default/layouts/fullscreenw.png'
 theme.layout_spiral  = theme_dir .. 'icons/assets/layouts/spiral.png'

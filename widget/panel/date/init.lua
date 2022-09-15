@@ -1,5 +1,5 @@
 return function(scr) 
-    local date = wibox.widget.textclock('<span font= "' .. default_font .. 'Bold 9' .. '">%a %b %d, %Y (%p)</span>', 60)
+    local date = wibox.widget.textclock('<span font= "' .. default_font .. 'Medium 10' .. '">%a %b %d, %Y (%p)</span>', 60)
 
     -- Attach a calendar to the textclock.
 

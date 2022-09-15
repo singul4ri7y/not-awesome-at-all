@@ -170,7 +170,10 @@ local function list_update(w, buttons, label, data, objects, args)
 			end)
 		))
 
-		local base_text = text:match('>(.-)<'):gsub('&[^;]+;', '')
+		-- Replace '%' with '%%'.
+		-- For markups.
+
+		local base_text = text:match('>(.-)<'):gsub('%%', '%%%%')
 
 		local window_indicators = ''
 
@@ -194,6 +197,19 @@ local function list_update(w, buttons, label, data, objects, args)
 
 		if utf8.len(base_text) > 25 then
 			text = text:gsub('>(.-)<', '>' .. base_text:sub(1, utf8.offset(base_text, 23) - 1) .. '...<')
+
+			-- Replace the XML/HTML specific symbol's text representation
+			-- with actual symbol representations.
+			-- Cause tooltips do not use markup.
+
+			base_text = base_text
+				:gsub('&lt;', '<')
+				:gsub('&gt;', '>')
+				:gsub('"', '&quot;')
+				:gsub("'", '&apos;')
+				:gsub('&', ':amp;')
+				:gsub('%%%%', '%%')
+
 			cache.tt:set_text(base_text)
 			cache.tt:add_to_object(cache.bgb)
 		else
@@ -249,6 +265,8 @@ local function list_update(w, buttons, label, data, objects, args)
 
 		w:add(cache.primary)
 	end
+
+	collectgarbage('collect')
 end
 
 local tasklist_buttons = gears.table.join(

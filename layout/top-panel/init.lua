@@ -22,6 +22,8 @@ return function(scr, offset)
 		fg      = beautiful.fg_normal
 	}
 
+	-- Panel boundary.
+
 	panel:struts {
 		top = dpi(45)
 	}

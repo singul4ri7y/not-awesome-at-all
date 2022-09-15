@@ -61,6 +61,9 @@ awful.keyboard.append_global_keybindings {
 awful.keyboard.append_global_keybindings {
 	awful.key({}, 'XF86AudioMute', function() awful.spawn.with_shell('amixer -D pulse set Master toggle') end,
               { description = '(un)mute audio', group = 'Control' }),
+	
+	awful.key({ super }, 'd', function() screen.emit_signal('panel:left::toggle') end,
+	          { description = 'Toggle dashboard', group = 'Control' })
 }
 
 -- Tags related keybindings.

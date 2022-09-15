@@ -1,17 +1,18 @@
 local action_bar = require('layout.left-panel.action-bar')
+local dashboard  = require('layout.left-panel.dashboard')
 
-return function(screen)
+return function(scr)
 	local action_bar_width = dpi(45)
-	local panel_content_width = dpi(350)
+	local panel_content_width = dpi(380)
 
 	local panel = wibox {
-		screen  = screen,
+		screen  = scr,
 		width   = action_bar_width,
 		type    = 'dock',
 		visible = true,
-		height  = screen.geometry.height,
-		x       = screen.geometry.x,
-		y       = screen.geometry.y,
+		height  = scr.geometry.height,
+		x       = scr.geometry.x,
+		y       = scr.geometry.y,
 		ontop   = true,
 		shape   = gears.shape.rectangle,
 		bg      = beautiful.background,
@@ -26,13 +27,13 @@ return function(screen)
 
 	local backdrop = wibox {
 		ontop  = true,
-		screen = screen,
+		screen = scr,
 		bg     = beautiful.transparent,
 		type   = 'utility',
-		x      = screen.geometry.x,
-		y      = screen.geometry.y,
-		width  = screen.geometry.width,
-		height = screen.geometry.height
+		x      = scr.geometry.x,
+		y      = scr.geometry.y,
+		width  = scr.geometry.width,
+		height = scr.geometry.height
 	}
 
 	function panel:run_rofi()
@@ -116,6 +117,8 @@ return function(screen)
 		end)
 	))
 
+	screen.connect_signal('panel:left::toggle', function() panel:toggle() end)
+
 	panel:setup {
 		layout = wibox.layout.align.horizontal,
 		nil,
@@ -128,12 +131,12 @@ return function(screen)
 			forced_width = panel_content_width,
 
 			{
-				--require('layout.left-panel.dashboard')(screen, panel),
+				dashboard(scr, panel),
 				layout = wibox.layout.stack
 			}
 		},
 
-		action_bar(screen, panel, action_bar_width)
+		action_bar(scr, panel, action_bar_width)
 	}
 
 	return panel
