@@ -73,7 +73,7 @@ power_button:buttons(gears.table.join(
 
 lock_button:buttons(gears.table.join(
     awful.button({}, 1, function()
-        awful.spawn.with_shell('i3lock-fancy')
+        awful.spawn('i3lock-fancy', true)
     end)
 ))
 

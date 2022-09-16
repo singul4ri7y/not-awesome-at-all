@@ -1,6 +1,7 @@
 local icons            = require('theme.icons')
 local clickable_widget = require('widget.style.clickable-widget')
 local helpers          = require('layout.helpers')
+local id               = require('config.user.id')
 
 local icon = wibox.widget {
 	layout = wibox.layout.align.vertical,
@@ -66,19 +67,12 @@ local volume_status = wibox.widget {
 
 local volume_slider = slider.volume_slider
 
-
-
-volume_slider:connect_signal('button::release', function()
-	naughty.notification { message = 'dfwef' }
-	awful.spawn.with_shell('mpg123 ' .. config_dir .. 'widget/settings/sound-control/assets/volume-change.mp3')
-end)
-
 volume_slider:connect_signal('property::value', function()
 	local volume_level = volume_slider:get_value()
 
 	volume_status:set_markup(helpers.colorize_text(tostring(volume_level) .. '%', '#F2F2F2EE'))
-
-	awful.spawn.with_shell('amixer -D pulse sset Master ' .. math.max(volume_level, 5) .. '%', false)
+	
+	awful.spawn('amixer -q -D pulse sset Master ' .. volume_level .. '%', false)
 end)
 
 volume_slider:buttons(gears.table.join(
@@ -104,16 +98,12 @@ volume_slider:buttons(gears.table.join(
 ))
 
 local update_slider = function()
-	awful.spawn.easy_async_with_shell('amixer -D pulse sget Master', function(stdout)
+	awful.spawn.easy_async_with_shell('amixer -D pulse sget Master', function(stdout) 
 		local volume = string.match(stdout, '(%d?%d?%d)%%')
-		
+
 		volume_slider:set_value(tonumber(volume))
 	end)
 end
-
--- Update on startup.
-
-update_slider()
 
 local action_jump = function()
 	local sli_value = volume_slider:get_value()

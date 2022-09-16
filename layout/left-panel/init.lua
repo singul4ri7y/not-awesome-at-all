@@ -46,7 +46,7 @@ return function(scr)
 		panel:get_children_by_id('panel_content')[1].visible = false
 	end
 
-	-- "Punch a hole" on backdrop to show the left dashboard.
+	-- 'Punch a hole' on backdrop to show the left dashboard.
 
 	local update_backdrop = function(wibox_backdrop, wibox_panel)
 		local cairo = require('lgi').cairo
@@ -57,16 +57,19 @@ return function(scr)
 		wibox_backdrop.width = geo.width
 		wibox_backdrop.height = geo.height
 
-		-- Create an image surface that is as large as the wibox_panel screen
+		-- Create an image surface that is as large as the wibox_panel screen.
+
 		local shape = cairo.ImageSurface.create(cairo.Format.A1, geo.width, geo.height)
 		local cr = cairo.Context(shape)
 
-		-- Fill with "completely opaque"
+		-- Fill with 'completely opaque'.
+
 		cr.operator = 'SOURCE'
 		cr:set_source_rgba(1, 1, 1, 1)
 		cr:paint()
 
-		-- Remove the shape of the client
+		-- Remove the shape of the client.
+
 		local c_geo = wibox_panel:geometry()
 		local c_shape = gears.surface(wibox_panel.shape_bounding)
 		cr:set_source_rgba(0, 0, 0, 0)
@@ -79,14 +82,23 @@ return function(scr)
 	end
 
 	local open_panel = function(should_run_rofi)
-		panel.width = action_bar_width + panel_content_width
+		panel.width      = action_bar_width + panel_content_width
 		backdrop.visible = true
+
 		update_backdrop(backdrop, panel)
+
 		panel:get_children_by_id('panel_content')[1].visible = true
+
 		if should_run_rofi then
 			panel:run_rofi()
 		end
+
 		panel:emit_signal('opened')
+
+		-- Update volume and brightness.
+
+		awesome.emit_signal('widget::brightness')
+		awesome.emit_signal('widget::volume')
 	end
 
 	local close_panel = function()

@@ -23,8 +23,8 @@ return function(scr, panel, action_bar_width)
 			menu_icon,
 			widget = clickable_widget
 		},
-		--bg = beautiful.background .. '66',
-		bg = '#003f6b',
+
+		bg     = '#003F6B',
 		widget = wibox.container.background
 	}
 
@@ -36,10 +36,14 @@ return function(scr, panel, action_bar_width)
 
 	panel:connect_signal('opened', function()
 		menu_icon.menu_btn:set_image(gears.surface(icons.close))
+
+		open_dashboard_button.bg = '#CC0000'
 	end)
 
 	panel:connect_signal('closed', function()
 		menu_icon.menu_btn:set_image(gears.surface(icons.menu))
+
+		open_dashboard_button.bg = '#003F6B'
 	end)
 
 	return wibox.widget {

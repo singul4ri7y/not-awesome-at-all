@@ -1,5 +1,6 @@
-local make_control   = require('widget.style.make-control')
-local volume_control = require('widget.settings.sound-control.volume-control')
+local make_control           = require('widget.style.make-control')
+local volume_control_master  = require('widget.settings.sound-control.volume-control-master')
+local volume_control_capture = require('widget.settings.sound-control.volume-control-capture')
 
 local control_title = wibox.widget {
 	text   = 'Sound Control',
@@ -9,4 +10,9 @@ local control_title = wibox.widget {
 	widget = wibox.widget.textbox
 }
 
-return make_control(control_title, volume_control)
+return make_control(control_title, {
+	volume_control_master,
+	volume_control_capture,
+
+	layout = wibox.layout.fixed.vertical
+})

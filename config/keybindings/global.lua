@@ -1,5 +1,6 @@
 local hotkeys_popup = require('awful.hotkeys_popup')
 local apps          = require('config.user.apps')
+local icons         = require('theme.icons')
 
 local super         = require('config.keys').super
 local shift         = 'Shift'
@@ -62,8 +63,29 @@ awful.keyboard.append_global_keybindings {
 	awful.key({}, 'XF86AudioMute', function() awful.spawn.with_shell('amixer -D pulse set Master toggle') end,
               { description = '(un)mute audio', group = 'Control' }),
 	
-	awful.key({ super }, 'd', function() screen.emit_signal('panel:left::toggle') end,
-	          { description = 'Toggle dashboard', group = 'Control' })
+	awful.key({}, 'XF86MonBrightnessUp', function() 
+		awful.spawn('brightnessctl set 5%+', false)
+
+		awesome.emit_signal('widget::brightness')
+	end, { description = 'Increase brightness by 5%', group = 'Control' }),
+
+	awful.key({}, 'XF86MonBrightnessDown', function() 
+		awful.spawn('brightnessctl set 5%-', false)
+
+		awesome.emit_signal('widget::brightness')
+	end, { description = 'Decrease brightness by 5%', group = 'Control' }),
+
+	awful.key({}, 'XF86AudioRaiseVolume', function() 
+		awful.spawn('amixer -D pulse sset Master 5%+', false)
+
+		awesome.emit_signal('widget::volume')
+	end, { description = 'Increase volume by 5%', group = 'Control' }),
+
+	awful.key({}, 'XF86AudioLowerVolume', function() 
+		awful.spawn('amixer -D pulse sset Master 5%-', false)
+
+		awesome.emit_signal('widget::volume')
+	end, { description = 'Decrease volume by 5%', group = 'Control' }),
 }
 
 -- Tags related keybindings.
@@ -150,6 +172,9 @@ awful.keyboard.append_global_keybindings {
 
 	awful.key({ super, shift }, 'space', function() awful.layout.inc(-1) end,
 	          { description = 'select previous', group = 'Layout' }),
+	
+	awful.key({ super }, 'd', function() screen.emit_signal('panel:left::toggle') end,
+			{ description = 'Toggle dashboard', group = 'Layout' })
 }
 
 -- Special tag related keybindings.

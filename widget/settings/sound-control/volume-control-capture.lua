@@ -1,6 +1,7 @@
 local icons            = require('theme.icons')
 local clickable_widget = require('widget.style.clickable-widget')
 local helpers          = require('layout.helpers')
+local id               = require('config.user.id')
 
 local icon = wibox.widget {
 	layout = wibox.layout.align.vertical,
@@ -9,7 +10,7 @@ local icon = wibox.widget {
 	nil,
 
 	{
-		image  = icons.brightness,
+		image  = icons.microphone,
 		resize = true,
 		widget = wibox.widget.imagebox
 	},
@@ -33,7 +34,7 @@ local slider = wibox.widget {
 	nil,
 
 	{
-		id 					= 'brightness_slider',
+		id 					= 'volume_slider',
 		bar_shape           = gears.shape.rounded_rect,
 		bar_height          = dpi(2),
 		bar_color           = '#FFFFFF20',
@@ -55,7 +56,7 @@ local slider = wibox.widget {
 	layout        = wibox.layout.align.vertical
 }
 
-local brightness_status = wibox.widget {
+local volume_status = wibox.widget {
 	widget       = wibox.widget.textbox,
 	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
 	align        = 'center',
@@ -64,54 +65,48 @@ local brightness_status = wibox.widget {
 	font         = 'Cantarell Medium 11'
 }
 
-local brightness_slider = slider.brightness_slider
+local volume_slider = slider.volume_slider
 
-brightness_slider:connect_signal('property::value', function()
-	local brightness_level = brightness_slider:get_value()
+volume_slider:connect_signal('property::value', function()
+	local volume_level = volume_slider:get_value()
 
-	if brightness_level < 5 then
-		brightness_level = 5
-	end
-
-		brightness_slider:set_value(brightness_level)
-
-	brightness_status:set_markup(helpers.colorize_text(tostring(brightness_level) .. '%', '#F2F2F2EE'))
+	volume_status:set_markup(helpers.colorize_text(tostring(volume_level) .. '%', '#F2F2F2EE'))
 	
-	awful.spawn('brightnessctl set ' .. brightness_level .. '%', false)
+	awful.spawn('amixer -q -D pulse sset Capture ' .. volume_level .. '%', false)
 end)
 
-brightness_slider:buttons(gears.table.join(
+volume_slider:buttons(gears.table.join(
 	awful.button({}, 4, nil, function()
-		if brightness_slider:get_value() > 100 then
-			brightness_slider:set_value(100)
+		if volume_slider:get_value() > 100 then
+			volume_slider:set_value(100)
 
 			return
 		end
 
-		brightness_slider:set_value(brightness_slider:get_value() + 5)
+		volume_slider:set_value(volume_slider:get_value() + 5)
 	end),
 
 	awful.button({}, 5, nil, function()
-		if brightness_slider:get_value() < 0 then
-			brightness_slider:set_value(0)
+		if volume_slider:get_value() < 0 then
+			volume_slider:set_value(0)
 
 			return
 		end
 
-		brightness_slider:set_value(brightness_slider:get_value() - 5)
+		volume_slider:set_value(volume_slider:get_value() - 5)
 	end)
 ))
 
 local update_slider = function()
-	awful.spawn.easy_async_with_shell('brightnessctl | grep -i  "current" | awk \'{ print $4 }\' | tr -d "(%)"', function(stdout)
-		local brightness = string.match(stdout, '(%d+)')
+	awful.spawn.easy_async_with_shell('amixer -D pulse sget Capture', function(stdout) 
+		local volume = string.match(stdout, '(%d?%d?%d)%%')
 
-		brightness_slider:set_value(tonumber(brightness))
+		volume_slider:set_value(tonumber(volume))
 	end)
 end
 
 local action_jump = function()
-	local sli_value = brightness_slider:get_value()
+	local sli_value = volume_slider:get_value()
 	local new_value = 0
 
 	if sli_value >= 0 and sli_value < 25 then
@@ -126,7 +121,7 @@ local action_jump = function()
 		new_value = 0
 	end
 
-	brightness_slider:set_value(new_value)
+	volume_slider:set_value(new_value)
 end
 
 action_level:buttons(awful.util.table.join(
@@ -137,7 +132,7 @@ action_level:buttons(awful.util.table.join(
 
 -- The emit will come from the global keybind.
 
-awesome.connect_signal('widget::brightness', function()
+awesome.connect_signal('widget::volume', function()
 	update_slider()
 end)
 
@@ -151,7 +146,7 @@ return wibox.widget {
 		},
 
 		slider,
-		brightness_status,
+		volume_status,
 
 		spacing = dpi(24),
 		layout  = wibox.layout.fixed.horizontal
