@@ -77,7 +77,7 @@ brightness_slider:connect_signal('property::value', function()
 
 	brightness_status:set_markup(helpers.colorize_text(tostring(brightness_level) .. '%', '#F2F2F2EE'))
 	
-	awful.spawn('brightnessctl set ' .. brightness_level .. '%', false)
+	awful.spawn('brightnessctl -q set ' .. brightness_level .. '%', false)
 end)
 
 brightness_slider:buttons(gears.table.join(

@@ -21,8 +21,10 @@ theme.bg_urgent   = '#ff0000'
 theme.bg_minimize = '#444444'
 theme.bg_systray  = theme.bg_normal
 
-theme.groups_bg       = '#ffffff' .. '10'
+theme.groups_bg       = '#FFFFFF' .. '10'
 theme.groups_title_bg = '#ffffff' .. '15'
+
+theme.color_white = '#FFFFFF' .. 'FF'
 
 theme.transparent = theme.bg_normal .. '00'
 
@@ -38,10 +40,10 @@ theme.border_color_normal = '#000000'
 theme.border_color_active = '#535d6c'
 theme.border_color_marked = '#91231c'
 
-theme.widget_enter   = '#FFFFFF'
-theme.widget_press   = '#FF0000'
+theme.widget_enter   = '#FFFFFF' .. '15'
+theme.widget_press   = '#FFFFFF' .. '25'
 theme.widget_leave   = theme.transparent
-theme.widget_release = '#000000'
+theme.widget_release = '#FFFFFF' .. '15'
 
 -- There are other variable sets
 -- overriding the default one when

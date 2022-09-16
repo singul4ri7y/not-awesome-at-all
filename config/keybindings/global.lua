@@ -60,17 +60,20 @@ awful.keyboard.append_global_keybindings {
 -- Control related keybindings.
 
 awful.keyboard.append_global_keybindings {
-	awful.key({}, 'XF86AudioMute', function() awful.spawn.with_shell('amixer -D pulse set Master toggle') end,
-              { description = '(un)mute audio', group = 'Control' }),
+	awful.key({}, 'XF86AudioMute', function() 
+		awful.spawn.with_shell('amixer -D pulse set Master toggle') 
+
+		awesome.emit_signal('widget::volume')
+	end, { description = '(un)mute audio', group = 'Control' }),
 	
 	awful.key({}, 'XF86MonBrightnessUp', function() 
-		awful.spawn('brightnessctl set 5%+', false)
+		awful.spawn('brightnessctl -q set 5%+', false)
 
 		awesome.emit_signal('widget::brightness')
 	end, { description = 'Increase brightness by 5%', group = 'Control' }),
 
 	awful.key({}, 'XF86MonBrightnessDown', function() 
-		awful.spawn('brightnessctl set 5%-', false)
+		awful.spawn('brightnessctl -q set 5%-', false)
 
 		awesome.emit_signal('widget::brightness')
 	end, { description = 'Decrease brightness by 5%', group = 'Control' }),

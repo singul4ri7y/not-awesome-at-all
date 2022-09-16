@@ -196,19 +196,23 @@ local function list_update(w, buttons, label, data, objects, args)
 		base_text = (window_indicators == '' and '' or '[' .. window_indicators .. '] ') .. base_text
 
 		if utf8.len(base_text) > 25 then
-			text = text:gsub('>(.-)<', '>' .. base_text:sub(1, utf8.offset(base_text, 23) - 1) .. '...<')
+			base_text = base_text
+				:gsub('&lt;', '<')
+				:gsub('&gt;', '>')
+				:gsub('&quot;', '"')
+				:gsub('&apos;', "'")
+				:gsub('&amp;', '&')
+
+			text = text:gsub('>(.-)<', '>' .. base_text:sub(1, utf8.offset(base_text, 23) - 1)
+				:gsub('&', '&amp;')
+				:gsub('<', '&lt;')
+				:gsub('>', '&gt;')
+				:gsub('"', '&quot;')
+				:gsub("'", '&apos;') .. '...<')
 
 			-- Replace the XML/HTML specific symbol's text representation
 			-- with actual symbol representations.
 			-- Cause tooltips do not use markup.
-
-			base_text = base_text
-				:gsub('&lt;', '<')
-				:gsub('&gt;', '>')
-				:gsub('"', '&quot;')
-				:gsub("'", '&apos;')
-				:gsub('&', ':amp;')
-				:gsub('%%%%', '%%')
 
 			cache.tt:set_text(base_text)
 			cache.tt:add_to_object(cache.bgb)
@@ -270,7 +274,7 @@ local function list_update(w, buttons, label, data, objects, args)
 end
 
 local tasklist_buttons = gears.table.join(
-	awful.button({}, 1, function(c)
+	awful.button({}, 1, nil, function(c)
 		if c == client.focus then
 			c.minimized = true
 		else
@@ -289,7 +293,7 @@ local tasklist_buttons = gears.table.join(
 		end
 	end),
 
-	awful.button({}, 2, function(c)
+	awful.button({}, 2, nil, function(c)
 		c:kill()
 	end),
 

@@ -30,9 +30,9 @@ return function(scr)
 		screen = scr,
 		bg     = beautiful.transparent,
 		type   = 'utility',
-		x      = scr.geometry.x,
+		x      = action_bar_width + panel_content_width,
 		y      = scr.geometry.y,
-		width  = scr.geometry.width,
+		width  = scr.geometry.width - (action_bar_width + panel_content_width),
 		height = scr.geometry.height
 	}
 
@@ -46,46 +46,9 @@ return function(scr)
 		panel:get_children_by_id('panel_content')[1].visible = false
 	end
 
-	-- 'Punch a hole' on backdrop to show the left dashboard.
-
-	local update_backdrop = function(wibox_backdrop, wibox_panel)
-		local cairo = require('lgi').cairo
-		local geo = wibox_panel.screen.geometry
-
-		wibox_backdrop.x = geo.x
-		wibox_backdrop.y = geo.y
-		wibox_backdrop.width = geo.width
-		wibox_backdrop.height = geo.height
-
-		-- Create an image surface that is as large as the wibox_panel screen.
-
-		local shape = cairo.ImageSurface.create(cairo.Format.A1, geo.width, geo.height)
-		local cr = cairo.Context(shape)
-
-		-- Fill with 'completely opaque'.
-
-		cr.operator = 'SOURCE'
-		cr:set_source_rgba(1, 1, 1, 1)
-		cr:paint()
-
-		-- Remove the shape of the client.
-
-		local c_geo = wibox_panel:geometry()
-		local c_shape = gears.surface(wibox_panel.shape_bounding)
-		cr:set_source_rgba(0, 0, 0, 0)
-		cr:mask_surface(c_shape, c_geo.x + wibox_panel.border_width - geo.x, c_geo.y + wibox_panel.border_width - geo.y)
-		c_shape:finish()
-
-		wibox_backdrop.shape_bounding = shape._native
-		shape:finish()
-		wibox_backdrop:draw()
-	end
-
 	local open_panel = function(should_run_rofi)
 		panel.width      = action_bar_width + panel_content_width
 		backdrop.visible = true
-
-		update_backdrop(backdrop, panel)
 
 		panel:get_children_by_id('panel_content')[1].visible = true
 
@@ -103,9 +66,11 @@ return function(scr)
 
 	local close_panel = function()
 		panel.width = action_bar_width
+		
 		panel:get_children_by_id('panel_content')[1].visible = false
+
 		backdrop.visible = false
-		update_backdrop(backdrop, panel)
+
 		panel:emit_signal('closed')
 	end
 
