@@ -39,7 +39,7 @@ local slider = wibox.widget {
 		bar_height          = dpi(2),
 		bar_color           = '#FFFFFF20',
 		bar_active_color	= '#F2F2F2EE',
-		forced_width        = dpi(188),
+		forced_width        = dpi(181),
 		handle_color        = '#FFFFFF',
 		handle_shape        = gears.shape.circle,
 		handle_width        = dpi(15),
@@ -56,7 +56,7 @@ local slider = wibox.widget {
 	layout        = wibox.layout.align.vertical
 }
 
-local volume_status = wibox.widget {
+local status = wibox.widget {
 	widget       = wibox.widget.textbox,
 	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
 	align        = 'center',
@@ -70,7 +70,7 @@ local volume_slider = slider.volume_slider
 volume_slider:connect_signal('property::value', function()
 	local volume_level = volume_slider:get_value()
 
-	volume_status:set_markup(helpers.colorize_text(tostring(volume_level) .. '%', '#F2F2F2EE'))
+	status:set_markup(helpers.colorize_text(tostring(volume_level) .. '%', '#F2F2F2EE'))
 	
 	awful.spawn('amixer -q -D pulse sset Master ' .. volume_level .. '%', false)
 end)
@@ -96,14 +96,6 @@ volume_slider:buttons(gears.table.join(
 		volume_slider:set_value(volume_slider:get_value() - 5)
 	end)
 ))
-
-local update_slider = function()
-	awful.spawn.easy_async_with_shell('amixer -D pulse sget Master', function(stdout) 
-		local volume = string.match(stdout, '(%d?%d?%d)%%')
-
-		volume_slider:set_value(tonumber(volume))
-	end)
-end
 
 local action_jump = function()
 	local sli_value = volume_slider:get_value()
@@ -133,7 +125,11 @@ action_level:buttons(awful.util.table.join(
 -- The emit will come from the global keybind.
 
 awesome.connect_signal('widget::sound', function()
-	update_slider()
+	awful.spawn.easy_async_with_shell('amixer -D pulse sget Master', function(stdout) 
+		local volume = string.match(stdout, '(%d?%d?%d)%%')
+
+		volume_slider:set_value(tonumber(volume))
+	end)
 end)
 
 return wibox.widget {
@@ -146,7 +142,7 @@ return wibox.widget {
 		},
 
 		slider,
-		volume_status,
+		status,
 
 		spacing = dpi(24),
 		layout  = wibox.layout.fixed.horizontal

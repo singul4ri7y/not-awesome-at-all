@@ -79,7 +79,7 @@ return function(scr, panel, action_bar_width)
 
 	expand_dashboard_button:buttons(gears.table.join(
 		awful.button({}, 1, nil, function()
-			panel:extended_dashboard_toggle()
+			panel:toggle_extended()
 		end)
 	))
 
@@ -90,7 +90,7 @@ return function(scr, panel, action_bar_width)
 
 		expand_dashboard_button.visible = true
 
-		open_dashboard_button.bg = '#CC0000'
+		open_dashboard_button.bg = '#AA0000'
 	end)
 
 	panel:connect_signal('closed', function()
@@ -101,6 +101,22 @@ return function(scr, panel, action_bar_width)
 		expand_dashboard_button.visible = false
 
 		open_dashboard_button.bg = '#003F6B'
+	end)
+
+	panel:connect_signal('opened_extended', function()
+		direction_icon.expand_icon:set_image(gears.surface(icons.left_arrow))
+
+		edb_tooltip:set_text('Shrink dashboard')
+
+		expand_dashboard_button.bg = '#AA0000'
+	end)
+
+	panel:connect_signal('closed_extended', function()
+		direction_icon.expand_icon:set_image(gears.surface(icons.right_arrow))
+
+		edb_tooltip:set_text('Expand dashbaord')
+
+		expand_dashboard_button.bg = '#003F6B'
 	end)
 
 	return wibox.widget {

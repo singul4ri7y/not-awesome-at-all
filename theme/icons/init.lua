@@ -31,6 +31,8 @@ return {
 
 	-- Others.
 
+	effects     = icon_dir .. 'effects.svg',
+
 	left_arrow  = icon_dir .. 'left-arrow.svg',
 	right_arrow = icon_dir .. 'right-arrow.svg',
 	search      = icon_dir .. 'magnify.svg',

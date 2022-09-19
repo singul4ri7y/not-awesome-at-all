@@ -38,7 +38,7 @@ local slider = wibox.widget {
 		bar_height          = dpi(2),
 		bar_color           = '#FFFFFF20',
 		bar_active_color	= '#F2F2F2EE',
-		forced_width        = dpi(188),
+		forced_width        = dpi(181),
 		handle_color        = '#FFFFFF',
 		handle_shape        = gears.shape.circle,
 		handle_width        = dpi(15),
@@ -55,7 +55,7 @@ local slider = wibox.widget {
 	layout        = wibox.layout.align.vertical
 }
 
-local brightness_status = wibox.widget {
+local status = wibox.widget {
 	widget       = wibox.widget.textbox,
 	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
 	align        = 'center',
@@ -73,9 +73,9 @@ brightness_slider:connect_signal('property::value', function()
 		brightness_level = 5
 	end
 
-		brightness_slider:set_value(brightness_level)
+	brightness_slider:set_value(brightness_level)
 
-	brightness_status:set_markup(helpers.colorize_text(tostring(brightness_level) .. '%', '#F2F2F2EE'))
+	status:set_markup(helpers.colorize_text(tostring(brightness_level) .. '%', '#F2F2F2EE'))
 	
 	awful.spawn('brightnessctl -q set ' .. brightness_level .. '%', false)
 end)
@@ -101,14 +101,6 @@ brightness_slider:buttons(gears.table.join(
 		brightness_slider:set_value(brightness_slider:get_value() - 5)
 	end)
 ))
-
-local update_slider = function()
-	awful.spawn.easy_async_with_shell('brightnessctl | grep -i  "current" | awk \'{ print $4 }\' | tr -d "(%)"', function(stdout)
-		local brightness = string.match(stdout, '(%d+)')
-
-		brightness_slider:set_value(tonumber(brightness))
-	end)
-end
 
 local action_jump = function()
 	local sli_value = brightness_slider:get_value()
@@ -138,7 +130,11 @@ action_level:buttons(awful.util.table.join(
 -- The emit will come from the global keybind.
 
 awesome.connect_signal('widget::display', function()
-	update_slider()
+	awful.spawn.easy_async_with_shell('brightnessctl | grep -i  "current" | awk \'{ print $4 }\' | tr -d "(%)"', function(stdout)
+		local brightness = string.match(stdout, '(%d+)')
+
+		brightness_slider:set_value(tonumber(brightness))
+	end)
 end)
 
 return wibox.widget {
@@ -151,7 +147,7 @@ return wibox.widget {
 		},
 
 		slider,
-		brightness_status,
+		status,
 
 		spacing = dpi(24),
 		layout  = wibox.layout.fixed.horizontal

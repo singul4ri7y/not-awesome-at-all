@@ -1,24 +1,25 @@
-local action_bar = require('layout.left-panel.action-bar')
-local dashboard  = require('layout.left-panel.dashboard')
+local action_bar   = require('layout.left-panel.action-bar')
+local dashboard    = require('layout.left-panel.dashboard')
+local dashboard_ex = require('layout.left-panel.dashboard-extended')
 
 return function(scr)
-	local action_bar_width          = dpi(45)
-	local panel_content_width       = dpi(380)
-	local extra_panel_content_width = dpi(380)
+	local action_bar_width    = dpi(45)
+	local panel_content_width = dpi(380)
 
 	local panel = wibox {
-		screen  = scr,
-		width   = action_bar_width,
-		type    = 'dock',
-		opened  = false,
-		visible = true,
-		height  = scr.geometry.height,
-		x       = scr.geometry.x,
-		y       = scr.geometry.y,
-		ontop   = true,
-		shape   = gears.shape.rectangle,
-		bg      = beautiful.background,
-		fg      = beautiful.fg_normal
+		screen    = scr,
+		width     = action_bar_width,
+		type      = 'dock',
+		opened    = false,
+		opened_ex = false,
+		visible   = true,
+		height    = scr.geometry.height,
+		x         = scr.geometry.x,
+		y         = scr.geometry.y,
+		ontop     = true,
+		shape     = gears.shape.rectangle,
+		bg        = beautiful.background,
+		fg        = beautiful.fg_normal
 	}
 
 	panel:struts {
@@ -36,7 +37,7 @@ return function(scr)
 		height = scr.geometry.height
 	}
 
-	local open_panel = function()
+	local function open_panel()
 		panel.width      = action_bar_width + panel_content_width
 		panel.opened     = true
 		backdrop.visible = true
@@ -51,7 +52,25 @@ return function(scr)
 		awesome.emit_signal('widget::sound')
 	end
 
-	local close_panel = function()
+	-- Close extended dashboard.
+
+	local function close_panel_extended()
+		panel.width     = action_bar_width + panel_content_width
+		panel.opened_ex = false
+
+		backdrop.width = scr.geometry.width - panel.width
+		backdrop.x     = panel.width
+
+		panel:get_children_by_id('panel_content_extended')[1].visible = false
+
+		panel:emit_signal('closed_extended')
+	end
+
+	local function close_panel()
+		if panel.opened_ex then
+			close_panel_extended()
+		end
+
 		panel.width  = action_bar_width
 		panel.opened = false
 		
@@ -62,10 +81,18 @@ return function(scr)
 		panel:emit_signal('closed')
 	end
 
-	-- Hide this panel when app dashboard is called.
+	-- Open extended dashboard.
 
-	function panel:hide_dashboard()
-		close_panel()
+	local function open_panel_extended()
+		panel.width     = action_bar_width + 2 * panel_content_width
+		panel.opened_ex = true
+		
+		backdrop.width = scr.geometry.width - panel.width
+		backdrop.x     = panel.width
+		
+		panel:get_children_by_id('panel_content_extended')[1].visible = true
+
+		panel:emit_signal('opened_extended')
 	end
 
 	function panel:toggle()
@@ -73,6 +100,14 @@ return function(scr)
 			close_panel()
 		else
 			open_panel()
+		end
+	end
+
+	function panel:toggle_extended()
+		if self.opened_ex then
+			close_panel_extended()
+		else 
+			open_panel_extended()
 		end
 	end
 
@@ -95,16 +130,27 @@ return function(scr)
 		nil,
 
 		{
-			id           = 'panel_content',
-			bg           = beautiful.transparent,
-			widget       = wibox.container.background,
-			visible      = false,
-			forced_width = panel_content_width,
+			{
+				dashboard(scr),
+
+				id           = 'panel_content',
+				bg           = beautiful.transparent,
+				widget       = wibox.container.background,
+				visible      = false,
+				forced_width = panel_content_width
+			},
 
 			{
-				dashboard(scr, panel),
-				layout = wibox.layout.stack
-			}
+				dashboard_ex(scr),
+
+				id           = 'panel_content_extended',
+				bg           = beautiful.transparent,
+				widget       = wibox.container.background,
+				visible      = false,
+				forced_width = panel_content_width_extended
+			},
+
+			layout = wibox.layout.fixed.horizontal
 		},
 
 		action_bar(scr, panel, action_bar_width)

@@ -31,8 +31,8 @@ local cpu_widget = wibox.widget {
 		layout = wibox.layout.stack,
 	},
 
-	forced_width  = dpi(166),
-	forced_height = dpi(166),
+	forced_width  = dpi(169),
+	forced_height = dpi(169),
 	widget        = wibox.container.margin,
 	margins       = dpi(24)
 }
@@ -64,41 +64,8 @@ local ram_widget = wibox.widget {
 		layout = wibox.layout.stack,
 	},
 
-	forced_width  = dpi(166),
-	forced_height = dpi(166),
-	widget        = wibox.container.margin,
-	margins       = dpi(24)
-}
-
-local temp_title = wibox.widget {
-	text   = 'CPU Temperature',
-	font   = 'Cantarell Regular 13',
-	align  = 'center',
-	valign = 'center',
-	widget = wibox.widget.textbox
-}
-
-local temp_icon = wibox.widget {
-	{
-		image  = icons.memory,
-		resize = true,
-		widget = wibox.widget.imagebox
-	},
-
-	widget = wibox.container.margin,
-	margins = dpi(30)
-}
-
-local temp_widget = wibox.widget {
-	{
-		ram_icon,
-		ram,
-		
-		layout = wibox.layout.stack,
-	},
-
-	forced_width  = dpi(166),
-	forced_height = dpi(166),
+	forced_width  = dpi(169),
+	forced_height = dpi(169),
 	widget        = wibox.container.margin,
 	margins       = dpi(24)
 }
@@ -108,5 +75,5 @@ return wibox.widget {
 	make_box(ram_title, ram_widget),
 
 	layout = wibox.layout.fixed.horizontal,
-	spacing = dpi(24)
+	spacing = dpi(20)
 }

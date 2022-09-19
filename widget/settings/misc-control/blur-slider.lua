@@ -1,7 +1,6 @@
 local icons            = require('theme.icons')
 local clickable_widget = require('widget.style.clickable-widget')
 local helpers          = require('layout.helpers')
-local id               = require('config.user.id')
 
 local icon = wibox.widget {
 	layout = wibox.layout.align.vertical,
@@ -10,7 +9,7 @@ local icon = wibox.widget {
 	nil,
 
 	{
-		image  = icons.microphone,
+		image  = icons.effects,
 		resize = true,
 		widget = wibox.widget.imagebox
 	},
@@ -34,7 +33,7 @@ local slider = wibox.widget {
 	nil,
 
 	{
-		id 					= 'volume_slider',
+		id 					= 'blur_slider',
 		bar_shape           = gears.shape.rounded_rect,
 		bar_height          = dpi(2),
 		bar_color           = '#FFFFFF20',
@@ -46,6 +45,7 @@ local slider = wibox.widget {
 		handle_border_color = '#00000012',
 		handle_border_width = dpi(1),
 		maximum				= 100,
+		value               = 40,
 		widget              = wibox.widget.slider,
 	},
 
@@ -58,47 +58,53 @@ local slider = wibox.widget {
 
 local status = wibox.widget {
 	widget       = wibox.widget.textbox,
-	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
+	markup       = helpers.colorize_text('40%', '#f2f2f2EE'),
 	align        = 'center',
 	valign       = 'center',
 	forced_width = dpi(48),
 	font         = 'Cantarell Medium 11'
 }
 
-local volume_slider = slider.volume_slider
+local blur_slider = slider.blur_slider
 
-volume_slider:connect_signal('property::value', function()
-	local volume_level = volume_slider:get_value()
+blur_slider:connect_signal('property::value', function()
+	local blur_level = blur_slider:get_value()
 
-	status:set_markup(helpers.colorize_text(tostring(volume_level) .. '%', '#F2F2F2EE'))
-	
-	awful.spawn('amixer -q -D pulse sset Capture ' .. volume_level .. '%', false)
+	if blur_level < 5 then
+		blur_level = 5
+	end
+
+	blur_slider:set_value(blur_level)
+
+	status:set_markup(helpers.colorize_text(tostring(blur_level) .. '%', '#F2F2F2EE'))
+
+
 end)
 
-volume_slider:buttons(gears.table.join(
+blur_slider:buttons(gears.table.join(
 	awful.button({}, 4, nil, function()
-		if volume_slider:get_value() > 100 then
-			volume_slider:set_value(100)
+		if blur_slider:get_value() > 100 then
+			blur_slider:set_value(100)
 
 			return
 		end
 
-		volume_slider:set_value(volume_slider:get_value() + 5)
+		blur_slider:set_value(blur_slider:get_value() + 5)
 	end),
 
 	awful.button({}, 5, nil, function()
-		if volume_slider:get_value() < 0 then
-			volume_slider:set_value(0)
+		if blur_slider:get_value() < 0 then
+			blur_slider:set_value(0)
 
 			return
 		end
 
-		volume_slider:set_value(volume_slider:get_value() - 5)
+		blur_slider:set_value(blur_slider:get_value() - 5)
 	end)
 ))
 
 local action_jump = function()
-	local sli_value = volume_slider:get_value()
+	local sli_value = brightness_slider:get_value()
 	local new_value = 0
 
 	if sli_value >= 0 and sli_value < 25 then
@@ -113,7 +119,7 @@ local action_jump = function()
 		new_value = 0
 	end
 
-	volume_slider:set_value(new_value)
+	brightness_slider:set_value(new_value)
 end
 
 action_level:buttons(awful.util.table.join(
@@ -124,12 +130,8 @@ action_level:buttons(awful.util.table.join(
 
 -- The emit will come from the global keybind.
 
-awesome.connect_signal('widget::sound', function()
-	awful.spawn.easy_async_with_shell('amixer -D pulse sget Capture', function(stdout) 
-		local volume = string.match(stdout, '(%d?%d?%d)%%')
-
-		volume_slider:set_value(tonumber(volume))
-	end)
+awesome.connect_signal('widget::misc', function()
+	
 end)
 
 return wibox.widget {
