@@ -24,7 +24,7 @@ output_switch:buttons(gears.table.join(
 	awful.button({}, 1, nil, function()
 		output_switch:toggle()
 
-		awful.spawn('amixer -D pulse sset Master toggle', false)
+		awful.spawn('amixer -q -D pulse sset Master toggle', false)
 	end)
 ))
 
@@ -32,11 +32,11 @@ input_switch:buttons(gears.table.join(
 	awful.button({}, 1, nil, function()
 		input_switch:toggle()
 
-		awful.spawn('amixer -D pulse sset Capture toggle', false)
+		awful.spawn('amixer -q -D pulse sset Capture toggle', false)
 	end)
 ))
 
-awesome.connect_signal('widget::volume', function()
+awesome.connect_signal('widget::sound', function()
 	awful.spawn.easy_async_with_shell('amixer -D pulse sget Master | awk \'/Left:/ { print $6 }\'', function(stdout)
 		if stdout:match('%[on%]') == '[on]' then
 			output_switch:on()

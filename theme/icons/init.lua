@@ -17,7 +17,7 @@ return {
 	menu  = icon_dir .. 'menu.svg',
 	close = icon_dir .. 'close.svg',
 
-	-- Power menu
+	-- Power menu.
 
 	logout  = icon_dir .. 'logout.svg',
 	sleep   = icon_dir .. 'power-sleep.svg',
@@ -25,8 +25,14 @@ return {
 	lock    = icon_dir .. 'lock.svg',
 	restart = icon_dir .. 'restart.svg',
 
+	-- Hardware monitors.
+
+	cpu = icon_dir .. 'hw-monitor/cpu.svg',
+
 	-- Others.
 
+	left_arrow  = icon_dir .. 'left-arrow.svg',
+	right_arrow = icon_dir .. 'right-arrow.svg',
 	search      = icon_dir .. 'magnify.svg',
 	volume      = icon_dir .. 'volume.svg',
 	microphone  = icon_dir .. 'microphone.svg',

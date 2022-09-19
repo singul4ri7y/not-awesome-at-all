@@ -137,7 +137,7 @@ action_level:buttons(awful.util.table.join(
 
 -- The emit will come from the global keybind.
 
-awesome.connect_signal('widget::brightness', function()
+awesome.connect_signal('widget::display', function()
 	update_slider()
 end)
 

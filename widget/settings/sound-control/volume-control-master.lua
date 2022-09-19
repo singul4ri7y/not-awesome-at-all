@@ -132,7 +132,7 @@ action_level:buttons(awful.util.table.join(
 
 -- The emit will come from the global keybind.
 
-awesome.connect_signal('widget::volume', function()
+awesome.connect_signal('widget::sound', function()
 	update_slider()
 end)
 

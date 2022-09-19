@@ -28,10 +28,9 @@ theme.color_white = '#FFFFFF' .. 'FF'
 
 theme.transparent = theme.bg_normal .. '00'
 
-theme.fg_normal   = '#aaaaaa'
-theme.fg_focus    = '#ffffff'
-theme.fg_urgent   = '#ffffff'
-theme.fg_minimize = '#ffffff'
+theme.fg_normal   = '#FFFFFFCD'
+theme.fg_focus    = '#E4E4E4'
+theme.fg_urgent   = '#CC9393'
 
 theme.useless_gap         = dpi(4)
 theme.no_gap              = dpi(0)

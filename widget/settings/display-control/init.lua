@@ -1,5 +1,6 @@
-local make_control       = require('widget.style.make-control')
+local make_box       = require('widget.style.make-box')
 local brightness_control = require('widget.settings.display-control.brightness-control')
+local display_options    = require('widget.settings.display-control.display-options')
 
 local control_title = wibox.widget {
 	text   = 'Display Control',
@@ -9,4 +10,9 @@ local control_title = wibox.widget {
 	widget = wibox.widget.textbox
 }
 
-return make_control(control_title, brightness_control)
+return make_box(control_title, {
+	brightness_control,
+	display_options,
+
+	layout = wibox.layout.fixed.vertical
+})

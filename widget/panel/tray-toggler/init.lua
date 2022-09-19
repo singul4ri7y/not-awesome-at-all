@@ -1,9 +1,9 @@
-local widget_icon_dir = config_dir .. 'widget/panel/tray-toggler/assets/'
+local icons = require('theme.icons')
 
 local widget = wibox.widget {
 	{
 		id     = 'icon',
-		image  = widget_icon_dir .. 'left-arrow.svg',
+		image  = icons.left_arrow,
 		widget = wibox.widget.imagebox,
 		resize = true
 	},
@@ -40,9 +40,9 @@ widget_button:buttons(gears.table.join(
 awesome.connect_signal('widget::systray:toggle', function()
 	if screen.primary.systray then
 		if not screen.primary.systray.visible then
-			widget.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. 'left-arrow.svg'))
+			widget.icon:set_image(gears.surface.load_uncached(icons.left_arrow))
 		else
-			widget.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. 'right-arrow.svg'))
+			widget.icon:set_image(gears.surface.load_uncached(icons.right_arrow))
 		end
 
 		screen.primary.systray.visible = not screen.primary.systray.visible
@@ -52,8 +52,17 @@ end)
 -- Update icon on start-up.
 
 if screen.primary.systray and screen.primary.systray.visible then
-	widget.icon:set_image(widget_icon_dir .. 'left-arrow.svg')
+	widget.icon:set_image(icons.left_arrow)
 end
+
+local tray_toggler_tooltip = awful.tooltip {
+	text       = 'Toggle system tray',
+	mode       = 'outside',
+	align      = 'bottom',
+	delay_show = 0.5
+}
+
+tray_toggler_tooltip:add_to_object(widget_button)
 
 -- Show only the tray button in the primary screen.
 

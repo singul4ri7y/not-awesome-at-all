@@ -32,28 +32,31 @@ awful.keyboard.append_global_keybindings {
 -- Launchers.
 
 awful.keyboard.append_global_keybindings {
-	awful.key({ super }, 'Return', function() awful.spawn(apps.terminal) end,
+	awful.key({ super }, 'Return', function() awful.spawn(apps.terminal, false) end,
 	          { description = 'Open terminal (Alacritty)', group = 'Launcher' }),
 
-	awful.key({ super }, 'b', function() awful.spawn(apps.browser) end,
+	awful.key({ super }, 'b', function() awful.spawn(apps.browser, false) end,
 	          { description = 'Open browser (Brave)', group = 'Launcher' }),
 
-	awful.key({ super }, 'c', function() awful.spawn(apps.dev) end,
+	awful.key({ super }, 'c', function() awful.spawn(apps.dev, false) end,
 	          { description = 'Open IDE (VS Code)', group = 'Launcher' }),
 
-	awful.key({ super }, 'e', function() awful.spawn(apps.files) end,
+	awful.key({ super }, 'e', function() awful.spawn(apps.files, false) end,
 	          { description = 'Open file manager (Thunar)', group = 'Launcher' }),
 
-	awful.key({ super }, 'v', function() awful.spawn(apps.media) end,
+	awful.key({ super }, 'v', function() awful.spawn(apps.media, false) end,
 	          { description = 'Open media player (VLC)', group = 'Launcher' }),
 
-	awful.key({ super }, 'r', function() awful.spawn('rofi -show combi') end,
-	          { description = 'Run command (Rofi combi)', group = 'Launcher'}),
+	awful.key({ super }, 'r', function() 
+		screen.emit_signal('panel:left::hide')
 
-	awful.key({ super }, 'l', function() awful.spawn(apps.lock) end,
+		awful.spawn(apps.rofi, false) 
+	end, { description = 'Run command (Rofi combi)', group = 'Launcher'}),
+
+	awful.key({ super }, 'l', function() awful.spawn(apps.lock, false) end,
 	          { description = 'Lock your screen (i3lock-fancy)', group = 'Launcher'}),
 
-	awful.key({ super }, 'g', function() awful.spawn(apps.game) end,
+	awful.key({ super }, 'g', function() awful.spawn(apps.game, false) end,
 	          { description = 'Open game laucher (Lutris)', group = 'Launcher'})
 }
 
@@ -63,31 +66,31 @@ awful.keyboard.append_global_keybindings {
 	awful.key({}, 'XF86AudioMute', function() 
 		awful.spawn.with_shell('amixer -D pulse set Master toggle') 
 
-		awesome.emit_signal('widget::volume')
+		awesome.emit_signal('widget::sound')
 	end, { description = '(un)mute audio', group = 'Control' }),
 	
 	awful.key({}, 'XF86MonBrightnessUp', function() 
 		awful.spawn('brightnessctl -q set 5%+', false)
 
-		awesome.emit_signal('widget::brightness')
+		awesome.emit_signal('widget::display')
 	end, { description = 'Increase brightness by 5%', group = 'Control' }),
 
 	awful.key({}, 'XF86MonBrightnessDown', function() 
 		awful.spawn('brightnessctl -q set 5%-', false)
 
-		awesome.emit_signal('widget::brightness')
+		awesome.emit_signal('widget::display')
 	end, { description = 'Decrease brightness by 5%', group = 'Control' }),
 
 	awful.key({}, 'XF86AudioRaiseVolume', function() 
 		awful.spawn('amixer -D pulse sset Master 5%+', false)
 
-		awesome.emit_signal('widget::volume')
+		awesome.emit_signal('widget::sound')
 	end, { description = 'Increase volume by 5%', group = 'Control' }),
 
 	awful.key({}, 'XF86AudioLowerVolume', function() 
 		awful.spawn('amixer -D pulse sset Master 5%-', false)
 
-		awesome.emit_signal('widget::volume')
+		awesome.emit_signal('widget::sound')
 	end, { description = 'Decrease volume by 5%', group = 'Control' }),
 }
 

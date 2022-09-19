@@ -1,4 +1,5 @@
 local clickable_widget = require('widget.style.clickable-widget')
+local apps             = require('config.user.apps')
 local helpers          = require('layout.helpers')
 
 -- Lockscreen.
@@ -7,7 +8,7 @@ local lock_button = wibox.widget {
 	{
 		{
 			widget = wibox.widget.textbox,
-			markup = helpers.colorize_text('', beautiful.fg_normal),
+			markup = helpers.colorize_text('', '#777777'),
 			font   = default_font .. '14',
 			align  = 'center',
 			valign = 'center'
@@ -38,7 +39,7 @@ local power_button = wibox.widget {
 	{
 		{
 			widget = wibox.widget.textbox,
-			markup = helpers.colorize_text('襤', beautiful.fg_normal),
+			markup = helpers.colorize_text('襤', '#777777'),
 			font   = default_font .. '14',
 			align  = 'center',
 			valign = 'center',
@@ -73,7 +74,7 @@ power_button:buttons(gears.table.join(
 
 lock_button:buttons(gears.table.join(
     awful.button({}, 1, function()
-        awful.spawn('i3lock-fancy', true)
+        awful.spawn(apps.lock, true)
     end)
 ))
 

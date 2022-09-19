@@ -2,13 +2,15 @@ local action_bar = require('layout.left-panel.action-bar')
 local dashboard  = require('layout.left-panel.dashboard')
 
 return function(scr)
-	local action_bar_width = dpi(45)
-	local panel_content_width = dpi(380)
+	local action_bar_width          = dpi(45)
+	local panel_content_width       = dpi(380)
+	local extra_panel_content_width = dpi(380)
 
 	local panel = wibox {
 		screen  = scr,
 		width   = action_bar_width,
 		type    = 'dock',
+		opened  = false,
 		visible = true,
 		height  = scr.geometry.height,
 		x       = scr.geometry.x,
@@ -18,8 +20,6 @@ return function(scr)
 		bg      = beautiful.background,
 		fg      = beautiful.fg_normal
 	}
-
-	panel.opened = false
 
 	panel:struts {
 		left = action_bar_width
@@ -36,36 +36,24 @@ return function(scr)
 		height = scr.geometry.height
 	}
 
-	function panel:run_rofi()
-		awesome.spawn('rofi -show drun', false, false, false, false, function()
-			panel:toggle()
-		end)
-		
-		-- Hide panel content if rofi global search is opened.
-
-		panel:get_children_by_id('panel_content')[1].visible = false
-	end
-
-	local open_panel = function(should_run_rofi)
+	local open_panel = function()
 		panel.width      = action_bar_width + panel_content_width
+		panel.opened     = true
 		backdrop.visible = true
 
 		panel:get_children_by_id('panel_content')[1].visible = true
 
-		if should_run_rofi then
-			panel:run_rofi()
-		end
-
 		panel:emit_signal('opened')
 
-		-- Update volume and brightness.
+		-- Update display and sound contents.
 
-		awesome.emit_signal('widget::brightness')
-		awesome.emit_signal('widget::volume')
+		awesome.emit_signal('widget::display')
+		awesome.emit_signal('widget::sound')
 	end
 
 	local close_panel = function()
-		panel.width = action_bar_width
+		panel.width  = action_bar_width
+		panel.opened = false
 		
 		panel:get_children_by_id('panel_content')[1].visible = false
 
@@ -75,16 +63,16 @@ return function(scr)
 	end
 
 	-- Hide this panel when app dashboard is called.
+
 	function panel:hide_dashboard()
 		close_panel()
 	end
 
-	function panel:toggle(should_run_rofi)
-		self.opened = not self.opened
+	function panel:toggle()
 		if self.opened then
-			open_panel(should_run_rofi)
-		else
 			close_panel()
+		else
+			open_panel()
 		end
 	end
 
@@ -95,6 +83,12 @@ return function(scr)
 	))
 
 	screen.connect_signal('panel:left::toggle', function() panel:toggle() end)
+
+	screen.connect_signal('panel:left::hide', function()
+		if panel.opened then
+			close_panel()
+		end
+	end)
 
 	panel:setup {
 		layout = wibox.layout.align.horizontal,

@@ -1,4 +1,4 @@
-return function(control_title, widget) 
+return function(control_title, widget, fh) 
 	return wibox.widget {
 		layout  = wibox.layout.fixed.vertical,
 		spacing = dpi(7),
@@ -40,6 +40,8 @@ return function(control_title, widget)
 					end
 				}
 			}
-		}
+		},
+
+		forced_height = fh
 	}
 end
