@@ -1,5 +1,5 @@
-return function(control_title, widget, fh) 
-	return wibox.widget {
+return function(control_title, widget, tooltip) 
+	local widget_r = wibox.widget {
 		layout  = wibox.layout.fixed.vertical,
 		spacing = dpi(7),
 	
@@ -41,7 +41,11 @@ return function(control_title, widget, fh)
 				}
 			}
 		},
-
-		forced_height = fh
 	}
+
+	if tooltip then
+		tooltip:add_to_object(widget_r)
+	end
+
+	return widget_r
 end

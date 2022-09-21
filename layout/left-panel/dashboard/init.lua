@@ -14,8 +14,10 @@ local author = wibox.widget {
 }
 
 return function(scr)
-	return wibox.widget {
+	return {
 		{
+			id = 'dashboard_margin',
+			
 			{
 				{
 					{
@@ -36,35 +38,17 @@ return function(scr)
 					bg     = beautiful.groups_bg
 				},
 
-				widget  = wibox.container.margin,
-				margins = dpi(20),
-			},
-
-			{
 				display_control,
-
-				widget  = wibox.container.margin,
-				margins = dpi(20),
-				top     = dpi(0)
-			},
-
-			{
 				sound_control,
-
-				widget  = wibox.container.margin,
-				margins = dpi(20),
-				top     = dpi(0)
-			},
-
-			{
 				misc_control,
 
-				widget  = wibox.container.margin,
-				margins = dpi(20),
-				top     = dpi(0)
+				layout  = wibox.layout.fixed.vertical,
+				spacing = dpi(20)
 			},
 
-			layout = wibox.layout.fixed.vertical
+			layout = wibox.container.margin,
+			margins = dpi(20),
+			right   = dpi(20)
 		},
 
 		nil,

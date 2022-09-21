@@ -5,8 +5,8 @@ return function()
 		{
 			hw_monitor,
 
-			widget = wibox.container.margin,
-			margins = { top = dpi(20), bottom = dpi(20), right = dpi(20) }
+			widget  = wibox.container.margin,
+			margins = { top = dpi(20), bottom = dpi(20), left = dpi(10), right = dpi(20) }
 		},
 
 		layout = wibox.layout.fixed.vertical

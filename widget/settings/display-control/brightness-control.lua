@@ -1,6 +1,8 @@
 local icons            = require('theme.icons')
 local clickable_widget = require('widget.style.clickable-widget')
-local helpers          = require('layout.helpers')
+local helpers          = require('utils.helpers')
+local slider_widget    = require('widget.style.slider')
+local make_slider      = require('utils.make-slider')
 
 local icon = wibox.widget {
 	layout = wibox.layout.align.vertical,
@@ -31,23 +33,7 @@ local action_level = wibox.widget {
 
 local slider = wibox.widget {
 	nil,
-
-	{
-		id 					= 'brightness_slider',
-		bar_shape           = gears.shape.rounded_rect,
-		bar_height          = dpi(2),
-		bar_color           = '#FFFFFF20',
-		bar_active_color	= '#F2F2F2EE',
-		forced_width        = dpi(181),
-		handle_color        = '#FFFFFF',
-		handle_shape        = gears.shape.circle,
-		handle_width        = dpi(15),
-		handle_border_color = '#00000012',
-		handle_border_width = dpi(1),
-		maximum				= 100,
-		widget              = wibox.widget.slider,
-	},
-
+	slider_widget(),
 	nil,
 
 	expand        = 'none',
@@ -60,11 +46,11 @@ local status = wibox.widget {
 	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
 	align        = 'center',
 	valign       = 'center',
-	forced_width = dpi(48),
+	forced_width = dpi(40),
 	font         = 'Cantarell Medium 11'
 }
 
-local brightness_slider = slider.brightness_slider
+local brightness_slider = slider.slider_widget
 
 brightness_slider:connect_signal('property::value', function()
 	local brightness_level = brightness_slider:get_value()
@@ -137,23 +123,4 @@ awesome.connect_signal('widget::display', function()
 	end)
 end)
 
-return wibox.widget {
-	{
-		{
-			action_level,
-
-			margins = { top = dpi(12), bottom = dpi(12) },
-			widget  = wibox.container.margin
-		},
-
-		slider,
-		status,
-
-		spacing = dpi(24),
-		layout  = wibox.layout.fixed.horizontal
-	},
-
-	widget        = wibox.container.margin,
-	forced_height = dpi(48),
-	margins       = { left = dpi(24), right = dpi(24) }
-}
+return make_slider(action_level, slider, status)

@@ -32,7 +32,7 @@ return function(scr, panel, action_bar_width)
 	local odb_tooltip = awful.tooltip {
 		text       = 'Open dashboard',
 		mode       = 'inside',
-		align      = 'bottom',
+		align      = 'right',
 		delay_show = 0.5
 	}
 
@@ -46,7 +46,7 @@ return function(scr, panel, action_bar_width)
 			widget = wibox.widget.imagebox
 		},
 
-		margins = dpi(10),
+		margins = dpi(13),
 		widget  = wibox.container.margin
 	}
 
@@ -133,9 +133,9 @@ return function(scr, panel, action_bar_width)
 		nil,
 
 		{
+			expand_dashboard_button,
 			clock,
 			layout_box(scr),
-			expand_dashboard_button,
 
 			layout = wibox.layout.fixed.vertical
 		}

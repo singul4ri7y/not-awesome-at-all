@@ -147,7 +147,7 @@ local function list_update(w, buttons, label, data, objects, args)
 			end
 
 			cache.tt = awful.tooltip {
-				mode       = 'outside',
+				mode       = 'inside',
 				align      = 'bottom',
 				delay_show = 0.5
 			}

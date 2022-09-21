@@ -1,5 +1,5 @@
 local id      = require('config.user.id')
-local helpers = require('layout.helpers')
+local helpers = require('utils.helpers')
 
 -- The profile picture.
 

@@ -22,7 +22,7 @@ local clock = wibox.widget {
 	},
 
 	widget = wibox.container.margin,
-	bottom = dpi(10)
+	margins = { top = dpi(10), bottom = dpi(10) }
 }
 
 local tooltip = awful.tooltip {

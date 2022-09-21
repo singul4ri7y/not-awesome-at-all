@@ -61,6 +61,7 @@ return function(scr)
 		backdrop.width = scr.geometry.width - panel.width
 		backdrop.x     = panel.width
 
+		panel:get_children_by_id('dashboard_margin')[1].right         = dpi(20)
 		panel:get_children_by_id('panel_content_extended')[1].visible = false
 
 		panel:emit_signal('closed_extended')
@@ -89,7 +90,8 @@ return function(scr)
 		
 		backdrop.width = scr.geometry.width - panel.width
 		backdrop.x     = panel.width
-		
+
+		panel:get_children_by_id('dashboard_margin')[1].right         = dpi(10)
 		panel:get_children_by_id('panel_content_extended')[1].visible = true
 
 		panel:emit_signal('opened_extended')
@@ -140,6 +142,8 @@ return function(scr)
 				forced_width = panel_content_width
 			},
 
+			nil,
+
 			{
 				dashboard_ex(scr),
 
@@ -147,10 +151,10 @@ return function(scr)
 				bg           = beautiful.transparent,
 				widget       = wibox.container.background,
 				visible      = false,
-				forced_width = panel_content_width_extended
+				forced_width = panel_content_width
 			},
 
-			layout = wibox.layout.fixed.horizontal
+			layout = wibox.layout.align.horizontal
 		},
 
 		action_bar(scr, panel, action_bar_width)

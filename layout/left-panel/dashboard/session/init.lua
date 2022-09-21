@@ -1,6 +1,6 @@
 local clickable_widget = require('widget.style.clickable-widget')
 local apps             = require('config.user.apps')
-local helpers          = require('layout.helpers')
+local helpers          = require('utils.helpers')
 
 -- Lockscreen.
 

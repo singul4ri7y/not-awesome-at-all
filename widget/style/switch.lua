@@ -1,4 +1,4 @@
-local helpers = require('layout.helpers')
+local helpers = require('utils.helpers')
 
 return function()
 	local switch = wibox.widget {

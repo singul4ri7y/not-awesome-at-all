@@ -1,4 +1,4 @@
-local make_box     = require('widget.style.make-box')
+local make_box     = require('utils.make-box')
 local blur_slider  = require('widget.settings.misc-control.blur-slider')
 local misc_options = require('widget.settings.misc-control.misc-options')
 

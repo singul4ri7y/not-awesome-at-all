@@ -1,4 +1,4 @@
-local make_box           = require('widget.style.make-box')
+local make_box           = require('utils.make-box')
 local brightness_control = require('widget.settings.display-control.brightness-control')
 local display_options    = require('widget.settings.display-control.display-options')
 

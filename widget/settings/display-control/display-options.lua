@@ -1,4 +1,4 @@
-local helpers = require('layout.helpers')
+local helpers = require('utils.helpers')
 local switch  = require('widget.style.switch')
 
 -- Tell caffeine module to start working.
