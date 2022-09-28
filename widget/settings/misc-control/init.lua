@@ -1,5 +1,5 @@
 local make_box     = require('utils.make-box')
-local blur_slider  = require('widget.settings.misc-control.blur-slider')
+local blur_control  = require('widget.settings.misc-control.blur-control')
 local misc_options = require('widget.settings.misc-control.misc-options')
 
 local control_title = wibox.widget {
@@ -11,7 +11,7 @@ local control_title = wibox.widget {
 }
 
 return make_box(control_title, {
-	blur_slider,
+	blur_control,
 	misc_options,
 
 	layout = wibox.layout.fixed.vertical

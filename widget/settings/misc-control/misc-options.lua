@@ -17,8 +17,17 @@ local amode_action_name = wibox.widget {
 	widget = wibox.widget.textbox
 }
 
-local blur_switch = switch()
-local amode_switch  = switch()
+local vsync_aciton_name = wibox.widget {
+	markup = helpers.colorize_text('V-Sync', beautiful.color_white),
+	font   = 'Cantarell Regular 12',
+	align  = 'left',
+	valign = 'center',
+	widget = wibox.widget.textbox
+}
+
+local blur_switch  = switch()
+local amode_switch = switch()
+local vsync_switch = switch()
 
 blur_switch:buttons(gears.table.join(
 	awful.button({}, 1, nil, function()
@@ -33,6 +42,14 @@ amode_switch:buttons(gears.table.join(
 		amode_switch:toggle()
 
 		
+	end)
+))
+
+vsync_switch:buttons(gears.table.join(
+	awful.button({}, 1, nil, function()
+		vsync_switch:toggle()
+
+
 	end)
 ))
 
@@ -51,7 +68,7 @@ return wibox.widget {
 				layout = wibox.layout.align.horizontal
 			},
 
-			margins = { top = dpi(12) },
+			top     = dpi(12),
 			widget  = wibox.container.margin
 		},
 
@@ -60,6 +77,19 @@ return wibox.widget {
 				amode_action_name,
 				nil,
 				amode_switch,
+
+				layout = wibox.layout.align.horizontal
+			},
+
+			top     = dpi(16),
+			widget  = wibox.container.margin
+		},
+
+		{
+			{
+				vsync_aciton_name,
+				nil,
+				vsync_switch,
 
 				layout = wibox.layout.align.horizontal
 			},

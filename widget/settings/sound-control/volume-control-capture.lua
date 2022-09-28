@@ -63,48 +63,44 @@ end)
 
 volume_slider:buttons(gears.table.join(
 	awful.button({}, 4, nil, function()
-		if volume_slider:get_value() > 100 then
-			volume_slider:set_value(100)
+		if volume_slider.value > 100 then
+			volume_slider.value = 100
 
 			return
 		end
 
-		volume_slider:set_value(volume_slider:get_value() + 5)
+		volume_slider.value = volume_slider.value + 5
 	end),
 
 	awful.button({}, 5, nil, function()
-		if volume_slider:get_value() < 0 then
-			volume_slider:set_value(0)
+		if volume_slider.value < 0 then
+			volume_slider.value = 0
 
 			return
 		end
 
-		volume_slider:set_value(volume_slider:get_value() - 5)
+		volume_slider.value = volume_slider.value - 5
 	end)
 ))
 
-local action_jump = function()
-	local sli_value = volume_slider:get_value()
-	local new_value = 0
-
-	if sli_value >= 0 and sli_value < 25 then
-		new_value = 25
-	elseif sli_value >= 25 and sli_value < 50 then
-		new_value = 50
-	elseif sli_value >= 50 and sli_value < 75 then
-		new_value = 75
-	elseif sli_value >= 75 and sli_value < 100 then
-		new_value = 100
-	else
-		new_value = 0
-	end
-
-	volume_slider:set_value(new_value)
-end
-
 action_level:buttons(awful.util.table.join(
 	awful.button({}, 1, nil, function()
-		action_jump()
+		local sli_value = volume_slider:get_value()
+		local new_value = 0
+
+		if sli_value >= 0 and sli_value < 25 then
+			new_value = 25
+		elseif sli_value >= 25 and sli_value < 50 then
+			new_value = 50
+		elseif sli_value >= 50 and sli_value < 75 then
+			new_value = 75
+		elseif sli_value >= 75 and sli_value < 100 then
+			new_value = 100
+		else
+			new_value = 0
+		end
+
+		volume_slider:set_value(new_value)
 	end)
 ))
 

@@ -163,9 +163,9 @@ local function list_update(w, buttons, label, data, objects, args)
 		item_args = item_args or {}
 
 		-- Add close button action.
-
+		
 		cache.cbm:buttons(gears.table.join(
-			awful.button({}, 1, nil, function() 
+			awful.button({}, 1, function() 				
 				o:kill()
 			end)
 		))
@@ -278,9 +278,8 @@ local tasklist_buttons = gears.table.join(
 		if c == client.focus then
 			c.minimized = true
 		else
-			-- I don't understand any of dis.
-
 			c.minimized = false
+			
 			if not c:isvisible() and c.first_tag then
 				c.first_tag:view_only()
 			end

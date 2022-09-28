@@ -56,15 +56,6 @@ theme.widget_release = '#FFFFFF' .. '15'
 -- Example:
 --theme.taglist_bg_focus = '#ff0000'
 
--- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
-
 -- Variables set for theming notifications:
 -- notification_font
 -- notification_[bg|fg]
@@ -86,6 +77,7 @@ theme.menu_width  = dpi(100)
 theme.wallpaper = theme_dir .. 'wallpapers/assets/silhouette-of-trees.jpg'
 
 -- You can use your own layout icons like this:
+
 theme.layout_floating  = theme_dir .. 'icons/assets/layouts/floating.png'
 theme.layout_max = themes_path..'default/layouts/maxw.png'
 theme.layout_fullscreen = themes_path..'default/layouts/fullscreenw.png'
@@ -101,6 +93,18 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Systray.
 
 theme.systray_icon_spacing = dpi(2)
+
+-- Taglist.
+
+theme.taglist_bg_empty = theme.bg_normal
+theme.taglist_bg_occupied = theme.bg_normal
+	-- theme.taglist_bg_urgent =
+	-- 'linear:0,0:' ..
+	-- dpi(48) ..
+	-- 	',0:0,' ..
+	-- 	theme.accent.hue_500 ..
+	-- 		':0.08,' .. theme.accent.hue_500 .. ':0.08,' .. theme.background.hue_800 .. ':1,' .. theme.background.hue_800
+theme.taglist_bg_focus = 'linear:0,0:' .. dpi(48) .. ',0:0,' .. '#FFFFFF' .. ':0.08,' .. '#FFFFFF' .. ':0.08,' .. theme.bg_normal .. ':1,' .. theme.bg_normal
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

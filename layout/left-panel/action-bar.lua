@@ -133,9 +133,9 @@ return function(scr, panel, action_bar_width)
 		nil,
 
 		{
-			expand_dashboard_button,
 			clock,
 			layout_box(scr),
+			expand_dashboard_button,
 
 			layout = wibox.layout.fixed.vertical
 		}

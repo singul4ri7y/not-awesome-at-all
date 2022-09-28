@@ -105,7 +105,7 @@ local temp_widget = wibox.widget {
 }
 
 local drive_title = wibox.widget {
-	text   = 'SSD (/)',
+	text   = 'Drive (/)',
 	font   = 'Cantarell Regular 13',
 	align  = 'center',
 	valign = 'center',

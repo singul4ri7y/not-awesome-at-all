@@ -65,6 +65,8 @@ return function(scr)
 		panel:get_children_by_id('panel_content_extended')[1].visible = false
 
 		panel:emit_signal('closed_extended')
+
+		awesome.emit_signal('widget::mediaplayer:close')
 	end
 
 	local function close_panel()
@@ -95,6 +97,8 @@ return function(scr)
 		panel:get_children_by_id('panel_content_extended')[1].visible = true
 
 		panel:emit_signal('opened_extended')
+
+		awesome.emit_signal('widget::mediaplayer:open')
 	end
 
 	function panel:toggle()
