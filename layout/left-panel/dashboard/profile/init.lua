@@ -1,5 +1,4 @@
 local id      = require('config.user.id')
-local helpers = require('utils.helpers')
 
 -- The profile picture.
 
@@ -22,7 +21,7 @@ local profile_image = wibox.widget {
 
 local fullname = wibox.widget {
 	widget = wibox.widget.textbox,
-	markup = helpers.colorize_text(id.fullname, beautiful.fg_normal),
+	markup = id.fullname,
 	font   = default_font .. 'Medium 13',
 	align  = 'left',
 	valign = 'center'
@@ -32,7 +31,7 @@ local fullname = wibox.widget {
 
 local username = wibox.widget {
 	widget = wibox.widget.textbox,
-	markup = helpers.colorize_text('@' .. id.username, beautiful.fg_normal),
+	markup = '@' .. id.username,
 	font   = default_font .. 'Light 11',
 	align  = 'left',
 	valign = 'center'

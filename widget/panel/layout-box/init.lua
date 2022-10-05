@@ -4,8 +4,9 @@ return function(scr)
 	local layout_box = wibox.widget {
 		{
 			awful.widget.layoutbox(scr),
+
 			margins = dpi(15),
-			widget = wibox.container.margin
+			widget  = wibox.container.margin
 		},
 
 		widget = clickable_widget

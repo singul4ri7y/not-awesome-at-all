@@ -9,10 +9,12 @@ screen.connect_signal('request::wallpaper', function(scr)
 				widget    = wibox.widget.imagebox,
 			},
 
-			valign = 'center',
-			halign = 'center',
-			tiled  = false,
-			widget = wibox.container.tile,
+			valign                = 'center',
+			halign                = 'center',
+			tiled                 = false,
+			horizontal_fit_policy = 'fit',
+			vertical_fit_policy   = 'fit',
+			widget                = wibox.container.tile,
 		}
 	}
 end)

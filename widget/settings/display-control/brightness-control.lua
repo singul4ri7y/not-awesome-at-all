@@ -1,6 +1,5 @@
 local icons            = require('theme.icons')
 local clickable_widget = require('widget.style.clickable-widget')
-local helpers          = require('utils.helpers')
 local slider_widget    = require('widget.style.slider')
 local make_slider      = require('utils.make-slider')
 
@@ -43,7 +42,7 @@ local slider = wibox.widget {
 
 local status = wibox.widget {
 	widget       = wibox.widget.textbox,
-	markup       = helpers.colorize_text('100%', '#f2f2f2EE'),
+	markup       = '100%',
 	align        = 'center',
 	valign       = 'center',
 	forced_width = dpi(40),
@@ -61,7 +60,7 @@ brightness_slider:connect_signal('property::value', function()
 
 	brightness_slider:set_value(brightness_level)
 
-	status:set_markup(helpers.colorize_text(tostring(brightness_level) .. '%', '#F2F2F2EE'))
+	status:set_markup(tostring(brightness_level) .. '%')
 	
 	awful.spawn('brightnessctl -q set ' .. brightness_level .. '%', false)
 end)

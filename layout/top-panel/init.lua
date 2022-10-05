@@ -3,10 +3,19 @@ local date           = require('widget.panel.date')
 local tray_toggler   = require('widget.panel.tray-toggler')
 local task_list      = require('widget.panel.task-list')
 
+-- To toggle the right panel.
+
+local panel_toggle   = require('layout.right-panel.panel-toggle')
+
 return function(scr, offset) 
+	local lb_widget = nil    -- Layout box widget for screen other than primary.
+
 	if offset then
 		offset = dpi(45)
-	else offset = dpi(0) end
+	else 
+		offset    = dpi(0)
+		lb_widget = require('widget.panel.layout-box')(scr)
+	end
 
 	local panel = wibox {
 		screen  = scr,
@@ -64,7 +73,9 @@ return function(scr, offset)
 			},
 
 			tray_toggler,
-			date(scr)
+			date(scr),
+			lb_widget,
+			panel_toggle(scr)
 		}
 	}
 

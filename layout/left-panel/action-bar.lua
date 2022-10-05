@@ -25,7 +25,7 @@ return function(scr, panel, action_bar_width)
 			widget = clickable_widget
 		},
 
-		bg     = '#003F6B',
+		bg     = beautiful.bg_db_button,
 		widget = wibox.container.background
 	}
 
@@ -57,7 +57,7 @@ return function(scr, panel, action_bar_width)
 			widget = clickable_widget
 		},
 
-		bg      = '#003F6B',
+		bg      = beautiful.bg_db_button,
 		visible = false,
 		widget  = wibox.container.background
 	}
@@ -100,23 +100,19 @@ return function(scr, panel, action_bar_width)
 
 		expand_dashboard_button.visible = false
 
-		open_dashboard_button.bg = '#003F6B'
+		open_dashboard_button.bg = beautiful.bg_db_button
 	end)
 
 	panel:connect_signal('opened_extended', function()
 		direction_icon.expand_icon:set_image(gears.surface(icons.left_arrow))
 
 		edb_tooltip:set_text('Shrink dashboard')
-
-		expand_dashboard_button.bg = '#AA0000'
 	end)
 
 	panel:connect_signal('closed_extended', function()
 		direction_icon.expand_icon:set_image(gears.surface(icons.right_arrow))
 
 		edb_tooltip:set_text('Expand dashbaord')
-
-		expand_dashboard_button.bg = '#003F6B'
 	end)
 
 	return wibox.widget {

@@ -2,10 +2,9 @@
 -- Default awesome theme --
 ---------------------------
 
-local theme_assets = require('beautiful.theme_assets')
-local xresources = require('beautiful.xresources')
+local theme_assets  = require('beautiful.theme_assets')
 local rnotification = require('ruled.notification')
-local dpi = xresources.apply_dpi
+local dpi           = require('beautiful.xresources').apply_dpi
 
 local gfs = require('gears.filesystem')
 local themes_path = gfs.get_themes_dir()
@@ -13,13 +12,16 @@ local theme_dir = gears.filesystem.get_configuration_dir() .. 'theme/'
 
 local theme = {}
 
-theme.font          = 'Ubuntu NF Medium 10'
+theme.font = 'Ubuntu NF Medium 10'
 
-theme.bg_normal   = '#222222'
-theme.bg_focus    = '#535d6c'
-theme.bg_urgent   = '#ff0000'
-theme.bg_minimize = '#444444'
-theme.bg_systray  = theme.bg_normal
+theme.bg_normal    = '#131A24'
+theme.bg_dashboard = '#192330'
+theme.bg_focus     = '#192330'
+theme.bg_db_button = '#39506D'
+theme.bg_backdrop  = '#000000' .. '7F'
+theme.bg_urgent    = '#ff0000'
+theme.bg_minimize  = '#444444'
+theme.bg_systray   = theme.bg_normal
 
 theme.groups_bg       = '#FFFFFF' .. '10'
 theme.groups_title_bg = '#ffffff' .. '15'
@@ -28,8 +30,8 @@ theme.color_white = '#FFFFFF' .. 'FF'
 
 theme.transparent = theme.bg_normal .. '00'
 
-theme.fg_normal   = '#FFFFFFCD'
-theme.fg_focus    = '#E4E4E4'
+theme.fg_normal   = '#EBEBEB'
+theme.fg_focus    = theme.fg_normal
 theme.fg_urgent   = '#CC9393'
 
 theme.useless_gap         = dpi(4)
@@ -86,9 +88,8 @@ theme.layout_spiral  = theme_dir .. 'icons/assets/layouts/spiral.png'
 theme.tasklist_plain_task_name = true
 
 -- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
+
+theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
 
 -- Systray.
 
@@ -104,10 +105,15 @@ theme.taglist_bg_occupied = theme.bg_normal
 	-- 	',0:0,' ..
 	-- 	theme.accent.hue_500 ..
 	-- 		':0.08,' .. theme.accent.hue_500 .. ':0.08,' .. theme.background.hue_800 .. ':1,' .. theme.background.hue_800
-theme.taglist_bg_focus = 'linear:0,0:' .. dpi(48) .. ',0:0,' .. '#FFFFFF' .. ':0.08,' .. '#FFFFFF' .. ':0.08,' .. theme.bg_normal .. ':1,' .. theme.bg_normal
+theme.taglist_bg_focus = 'linear:0,0:' .. dpi(45) .. ',0:0,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. '30' .. ':1,' .. theme.bg_db_button .. '25'
+
+-- Tasklist.
+
+theme.tasklist_bg_focus = 'linear:0,0:0,' .. dpi(45) .. ':0,' .. theme.bg_db_button .. '25' .. ':0.95,' .. theme.bg_db_button .. '30' .. ':0.95,' .. theme.fg_normal .. ':1,' .. theme.fg_normal
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
+
 theme.icon_theme = 'Tela-blue-dark'
 
 -- Set different colors for urgent notifications.

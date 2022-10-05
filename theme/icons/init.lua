@@ -33,6 +33,8 @@ return {
 
 	effects     = icon_dir .. 'effects.svg',
 
+	notification = icon_dir .. 'top-panel/notification.svg',
+
 	left_arrow  = icon_dir .. 'left-arrow.svg',
 	right_arrow = icon_dir .. 'right-arrow.svg',
 	search      = icon_dir .. 'magnify.svg',

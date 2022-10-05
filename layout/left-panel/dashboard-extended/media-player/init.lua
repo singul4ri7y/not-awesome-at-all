@@ -104,7 +104,7 @@ media_slider:buttons(gears.table.join(
 local passed_time = wibox.widget {
 	widget = wibox.widget.textbox,
 	markup = 'N/A',
-	font   = 'Canterell Regular 12',
+	font   = 'Cantarell Regular 12',
 	align  = 'center',
 	valign = 'center'
 }
@@ -112,7 +112,7 @@ local passed_time = wibox.widget {
 local total_time = wibox.widget {
 	widget = wibox.widget.textbox,
 	markup = 'N/A',
-	font   = 'Canterell Regular 12',
+	font   = 'Cantarell Regular 12',
 	align  = 'center',
 	valign = 'center'
 }

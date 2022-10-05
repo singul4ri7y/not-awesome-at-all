@@ -18,7 +18,7 @@ return function(scr)
 		y         = scr.geometry.y,
 		ontop     = true,
 		shape     = gears.shape.rectangle,
-		bg        = beautiful.background,
+		bg        = beautiful.bg_normal,
 		fg        = beautiful.fg_normal
 	}
 
@@ -29,7 +29,7 @@ return function(scr)
 	local backdrop = wibox {
 		ontop  = true,
 		screen = scr,
-		bg     = beautiful.transparent,
+		bg     = beautiful.bg_backdrop,
 		type   = 'utility',
 		x      = action_bar_width + panel_content_width,
 		y      = scr.geometry.y,
@@ -37,14 +37,17 @@ return function(scr)
 		height = scr.geometry.height
 	}
 
-	local function open_panel()
-		panel.width      = action_bar_width + panel_content_width
-		panel.opened     = true
+	function panel:open()
+		scr.right_panel:close()
+
+		self.width       = action_bar_width + panel_content_width
+		self.opened      = true
+		
 		backdrop.visible = true
 
-		panel:get_children_by_id('panel_content')[1].visible = true
+		self:get_children_by_id('panel_content')[1].visible = true
 
-		panel:emit_signal('opened')
+		self:emit_signal('opened')
 
 		-- Update display and sound contents.
 
@@ -54,66 +57,66 @@ return function(scr)
 
 	-- Close extended dashboard.
 
-	local function close_panel_extended()
-		panel.width     = action_bar_width + panel_content_width
-		panel.opened_ex = false
+	function panel:close_extended()
+		self.width     = action_bar_width + panel_content_width
+		self.opened_ex = false
 
-		backdrop.width = scr.geometry.width - panel.width
-		backdrop.x     = panel.width
+		backdrop.width = scr.geometry.width - self.width
+		backdrop.x     = self.width
 
-		panel:get_children_by_id('dashboard_margin')[1].right         = dpi(20)
-		panel:get_children_by_id('panel_content_extended')[1].visible = false
+		self:get_children_by_id('dashboard_margin')[1].right         = dpi(20)
+		self:get_children_by_id('panel_content_extended')[1].visible = false
 
-		panel:emit_signal('closed_extended')
+		self:emit_signal('closed_extended')
 
 		awesome.emit_signal('widget::mediaplayer:close')
 	end
 
-	local function close_panel()
-		if panel.opened_ex then
-			close_panel_extended()
+	function panel:close()
+		if self.opened_ex then
+			panel:close_extended()
 		end
 
-		panel.width  = action_bar_width
-		panel.opened = false
+		self.width  = action_bar_width
+		self.opened = false
 		
-		panel:get_children_by_id('panel_content')[1].visible = false
+		self:get_children_by_id('panel_content')[1].visible = false
 
 		backdrop.visible = false
 
-		panel:emit_signal('closed')
+		self:emit_signal('closed')
 	end
 
 	-- Open extended dashboard.
 
-	local function open_panel_extended()
-		panel.width     = action_bar_width + 2 * panel_content_width
-		panel.opened_ex = true
+	function panel:open_extended()
+		self.width     = action_bar_width + 2 * panel_content_width
+		self.opened_ex = true
 		
-		backdrop.width = scr.geometry.width - panel.width
-		backdrop.x     = panel.width
+		backdrop.width = scr.geometry.width - self.width
+		backdrop.x     = self.width
 
-		panel:get_children_by_id('dashboard_margin')[1].right         = dpi(10)
-		panel:get_children_by_id('panel_content_extended')[1].visible = true
+		self:get_children_by_id('dashboard_margin')[1].right         = dpi(10)
+		self:get_children_by_id('panel_content_extended')[1].visible = true
 
-		panel:emit_signal('opened_extended')
+		self:emit_signal('opened_extended')
 
 		awesome.emit_signal('widget::mediaplayer:open')
 	end
 
 	function panel:toggle()
 		if self.opened then
-			close_panel()
+			panel:close()
 		else
-			open_panel()
+			panel:open()
 		end
 	end
 
 	function panel:toggle_extended()
 		if self.opened_ex then
-			close_panel_extended()
+			panel:close_extended()
 		else 
-			open_panel_extended()
+			panel:open_extended()
 		end
 	end
 
@@ -127,7 +130,7 @@ return function(scr)
 
 	screen.connect_signal('panel:left::hide', function()
 		if panel.opened then
-			close_panel()
+			panel:close()
 		end
 	end)
 
@@ -137,28 +140,33 @@ return function(scr)
 
 		{
 			{
-				dashboard(scr),
+				{
+					dashboard(scr),
 
-				id           = 'panel_content',
-				bg           = beautiful.transparent,
-				widget       = wibox.container.background,
-				visible      = false,
-				forced_width = panel_content_width
+					id           = 'panel_content',
+					bg           = beautiful.transparent,
+					widget       = wibox.container.background,
+					visible      = false,
+					forced_width = panel_content_width
+				},
+
+				nil,
+
+				{
+					dashboard_ex(scr),
+
+					id           = 'panel_content_extended',
+					bg           = beautiful.transparent,
+					widget       = wibox.container.background,
+					visible      = false,
+					forced_width = panel_content_width
+				},
+
+				layout = wibox.layout.align.horizontal
 			},
 
-			nil,
-
-			{
-				dashboard_ex(scr),
-
-				id           = 'panel_content_extended',
-				bg           = beautiful.transparent,
-				widget       = wibox.container.background,
-				visible      = false,
-				forced_width = panel_content_width
-			},
-
-			layout = wibox.layout.align.horizontal
+			bg = beautiful.bg_dashboard,
+			widget = wibox.container.background
 		},
 
 		action_bar(scr, panel, action_bar_width)
