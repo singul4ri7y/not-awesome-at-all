@@ -11,6 +11,7 @@ return function()
 		handle_border_color = '#00000012',
 		handle_border_width = dpi(1),
 		maximum				= 100,
+		value               = 100,
 		widget              = wibox.widget.slider,
 	}
 end

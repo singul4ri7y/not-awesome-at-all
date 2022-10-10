@@ -128,12 +128,6 @@ return function(scr)
 
 	screen.connect_signal('panel:left::toggle', function() panel:toggle() end)
 
-	screen.connect_signal('panel:left::hide', function()
-		if panel.opened then
-			panel:close()
-		end
-	end)
-
 	panel:setup {
 		layout = wibox.layout.align.horizontal,
 		nil,

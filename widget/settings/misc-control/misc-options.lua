@@ -17,8 +17,8 @@ local amode_action_name = wibox.widget {
 	widget = wibox.widget.textbox
 }
 
-local vsync_aciton_name = wibox.widget {
-	markup = helpers.colorize_text('V-Sync', beautiful.color_white),
+local comp_aciton_name = wibox.widget {
+	markup = helpers.colorize_text('Compositor', beautiful.color_white),
 	font   = 'Cantarell Regular 12',
 	align  = 'left',
 	valign = 'center',
@@ -27,7 +27,7 @@ local vsync_aciton_name = wibox.widget {
 
 local blur_switch  = switch()
 local amode_switch = switch()
-local vsync_switch = switch()
+local comp_switch  = switch()
 
 blur_switch:buttons(gears.table.join(
 	awful.button({}, 1, nil, function()
@@ -45,17 +45,17 @@ amode_switch:buttons(gears.table.join(
 	end)
 ))
 
-vsync_switch:buttons(gears.table.join(
+comp_switch:buttons(gears.table.join(
 	awful.button({}, 1, nil, function()
-		vsync_switch:toggle()
+		comp_switch:toggle()
 
-
+		awesome.emit_signal('compositor::toggle', comp_switch)
 	end)
 ))
 
-awesome.connect_signal('widget::misc', function()
-	
-end)
+-- Tell compositor module to start working.
+
+awesome.emit_signal('compositor::init', comp_switch)
 
 return wibox.widget {
 	{
@@ -87,9 +87,9 @@ return wibox.widget {
 
 		{
 			{
-				vsync_aciton_name,
+				comp_aciton_name,
 				nil,
-				vsync_switch,
+				comp_switch,
 
 				layout = wibox.layout.align.horizontal
 			},

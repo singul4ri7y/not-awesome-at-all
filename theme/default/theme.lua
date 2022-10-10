@@ -18,7 +18,7 @@ theme.bg_normal    = '#131A24'
 theme.bg_dashboard = '#192330'
 theme.bg_focus     = '#192330'
 theme.bg_db_button = '#39506D'
-theme.bg_backdrop  = '#000000' .. '7F'
+theme.bg_backdrop  = theme.bg_normal .. '7F'
 theme.bg_urgent    = '#ff0000'
 theme.bg_minimize  = '#444444'
 theme.bg_systray   = theme.bg_normal
@@ -76,7 +76,7 @@ theme.menu_width  = dpi(100)
 -- beautiful.variable in your rc.lua
 --theme.bg_widget = '#cc0000'
 
-theme.wallpaper = theme_dir .. 'wallpapers/assets/silhouette-of-trees.jpg'
+theme.wallpaper = theme_dir .. 'wallpapers/assets/neven-krcmarek.jpg'
 
 -- You can use your own layout icons like this:
 
@@ -97,24 +97,20 @@ theme.systray_icon_spacing = dpi(2)
 
 -- Taglist.
 
-theme.taglist_bg_empty = theme.bg_normal
+theme.taglist_bg_empty    = theme.bg_normal
 theme.taglist_bg_occupied = theme.bg_normal
-	-- theme.taglist_bg_urgent =
-	-- 'linear:0,0:' ..
-	-- dpi(48) ..
-	-- 	',0:0,' ..
-	-- 	theme.accent.hue_500 ..
-	-- 		':0.08,' .. theme.accent.hue_500 .. ':0.08,' .. theme.background.hue_800 .. ':1,' .. theme.background.hue_800
-theme.taglist_bg_focus = 'linear:0,0:' .. dpi(45) .. ',0:0,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. '30' .. ':1,' .. theme.bg_db_button .. '25'
+theme.taglist_bg_urgent   = 'linear:0,0:' .. dpi(45) .. ',0:0,#AA0000:0.08,#AA0000:0.08,#AA000030:1,#AA000025'
+theme.taglist_bg_focus    = 'linear:0,0:' .. dpi(45) .. ',0:0,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. ':0.08,' .. theme.bg_db_button .. '30' .. ':1,' .. theme.bg_db_button .. '25'
 
 -- Tasklist.
 
-theme.tasklist_bg_focus = 'linear:0,0:0,' .. dpi(45) .. ':0,' .. theme.bg_db_button .. '25' .. ':0.95,' .. theme.bg_db_button .. '30' .. ':0.95,' .. theme.fg_normal .. ':1,' .. theme.fg_normal
+theme.tasklist_bg_focus     = 'linear:0,0:0,' .. dpi(45) .. ':0,' .. theme.bg_db_button .. '25' .. ':0.95,' .. theme.bg_db_button .. '30' .. ':0.95,' .. theme.fg_normal .. ':1,' .. theme.fg_normal
+theme.tasklist_bg_minimize  = theme.bg_dashboard
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 
-theme.icon_theme = 'Tela-blue-dark'
+theme.icon_theme = 'Papirus-Dark'
 
 -- Set different colors for urgent notifications.
 rnotification.connect_signal('request::rules', function()

@@ -30,7 +30,7 @@ local tags = {
 		icon = icons.game,
 		default_app = apps.game,
 		gap = beautiful.no_gap,
-		layout = awful.layout.suit.max.fullscreen
+		layout = awful.layout.suit.floating
 	},
 
 	{

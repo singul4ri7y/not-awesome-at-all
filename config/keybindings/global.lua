@@ -48,8 +48,6 @@ awful.keyboard.append_global_keybindings {
 	          { description = 'Open media player (VLC)', group = 'Launcher' }),
 
 	awful.key({ super }, 'r', function() 
-		screen.emit_signal('panel:left::hide')
-
 		awful.spawn(apps.rofi, false) 
 	end, { description = 'Run command (Rofi combi)', group = 'Launcher'}),
 
@@ -57,7 +55,13 @@ awful.keyboard.append_global_keybindings {
 	          { description = 'Lock your screen (i3lock-fancy)', group = 'Launcher'}),
 
 	awful.key({ super }, 'g', function() awful.spawn(apps.game, false) end,
-	          { description = 'Open game laucher (Lutris)', group = 'Launcher'})
+	          { description = 'Open game laucher (Lutris)', group = 'Launcher'}),
+
+	awful.key({ super }, 's', function() awful.spawn(apps.sshot, false) end,
+	          { description = 'Snapshot the whole screen (Flameshot)', group = 'Launcher'}),
+
+	awful.key({ super, shift }, 'Escape', function() awful.spawn(apps.sysmon, false) end,
+	          { description = 'Open system monitor (htop)', group = 'Launcher'})
 }
 
 -- Control related keybindings.

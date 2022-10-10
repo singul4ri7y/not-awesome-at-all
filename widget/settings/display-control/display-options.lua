@@ -1,10 +1,6 @@
 local helpers = require('utils.helpers')
 local switch  = require('widget.style.switch')
 
--- Tell caffeine module to start working.
-
-awesome.emit_signal('caffeine::init')
-
 local caffeine_action_name = wibox.widget {
 	markup = helpers.colorize_text('Caffeine', beautiful.color_white),
 	font   = 'Cantarell Regular 12',
@@ -21,9 +17,9 @@ caffeine_switch:buttons(gears.table.join(
 	end)
 ))
 
-awesome.connect_signal('widget::display', function()
-	awesome.emit_signal('caffeine::update', caffeine_switch)
-end)
+-- Tell caffeine module to start working.
+
+awesome.emit_signal('caffeine::init', caffeine_switch)
 
 return wibox.widget {
 	{

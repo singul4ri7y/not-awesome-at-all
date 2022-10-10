@@ -126,7 +126,7 @@ local prev_icon = wibox.widget {
 	markup = '玲',
 	align  = 'center',
 	valign = 'center',
-	font   = default_font .. 'Regular 25'
+	font   = 'Canratrell Regular 25'
 }
 
 local prev_icon_tooltip = awful.tooltip {
@@ -151,7 +151,7 @@ local playpause_icon = wibox.widget {
 	markup = '契',
 	align  = 'center',
 	valign = 'center',
-	font   = default_font .. 'Regular 35'
+	font   = 'Canratrell Regular 30'
 }
 
 local playpause_icon_tooltip = awful.tooltip {
@@ -201,7 +201,7 @@ local next_icon = wibox.widget {
 	markup = '怜',
 	align  = 'center',
 	valign = 'center',
-	font   = default_font .. 'Regular 25'
+	font   = 'Canratrell Regular 25'
 }
 
 next_icon_tooltip = awful.tooltip {
@@ -459,7 +459,7 @@ local media_player = wibox.widget {
 				next_icon,
 
 				layout  = wibox.layout.fixed.horizontal,
-				spacing = dpi(5)
+				spacing = dpi(24)
 			},
 
 			nil,

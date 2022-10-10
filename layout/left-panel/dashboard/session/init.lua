@@ -67,7 +67,7 @@ power_button_tool_tip:add_to_object(power_button)
 
 power_button:buttons(gears.table.join(
     awful.button({}, 1, function()
-        naughty.notification { message = 'not implemented' }
+        screen.emit_signal('exit_screen::show')
     end)
 ))
 

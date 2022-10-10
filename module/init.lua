@@ -10,6 +10,14 @@ require('module.autostart')
 
 require('module.caffeine')
 
+-- Init compositor module.
+
+require('module.compositor')
+
 -- Init hardware monitor.
 
 require('module.hardware-monitor')
+
+-- Init exit screen.
+
+require('module.exit-screen')

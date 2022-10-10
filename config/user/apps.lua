@@ -2,12 +2,14 @@ local id = require('config.user.id')
 
 return {
 	terminal = 'alacritty',
-	browser  = 'brave --use-gl=desktop --enable-features=VaapiVideoEncoder,VaapiVideoDecoder --process-per-site',
+	browser  = 'brave --enable-features=VaapiVideoEncoder --process-per-site',
 	editor   = 'alacritty --title NeoVIm -e nvim',
 	game     = 'lutris',
 	sandbox  = 'virt-manager',
 	dev      = 'code',
 	media    = 'vlc --started-from-file',
+	sysmon   = 'alacritty --title "System Monitor" -e htop',
+	sshot    = 'flameshot launcher',
 	files    = 'thunar',
 	rofi     = 'rofi -dpi ' .. screen.primary.dpi .. ' -show drun -theme ' .. config_dir .. 'config/rofi.rasi',
 	network  = 'nm-connection-editor',
