@@ -43,7 +43,7 @@ awesome.connect_signal('widget::sound', function()
 		else output_switch:off() end
 	end)
 
-	awful.spawn.easy_async_with_shell('amixer -D pulse sget Capture | awk \'/Left:/ { print $6 }\'', function(stdout)
+	awful.spawn.easy_async_with_shell('amixer -D pulse sget Capture | awk \'/Mono:/ { print $5 }\'', function(stdout)
 		if stdout:match('%[on%]') == '[on]' then
 			input_switch:on()
 		else input_switch:off() end

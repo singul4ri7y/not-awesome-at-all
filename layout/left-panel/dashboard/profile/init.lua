@@ -1,10 +1,10 @@
-local id      = require('config.user.id')
+local id = require('config.user.id')
 
 -- The profile picture.
 
 local profile_image = wibox.widget {
 	{
-		image      = config_dir .. 'layout/left-panel/dashboard/profile/assets/' .. 'profile.jpg',
+		image      = id.profile,
 		clip_shape = gears.shape.circle,
 		widget     = wibox.widget.imagebox
 	},
@@ -14,7 +14,7 @@ local profile_image = wibox.widget {
 	forced_width  = dpi(75),
 	forced_height = dpi(75),
 	shape         = gears.shape.circle,
-	border_color  = beautiful.fg_normal
+	border_color  = beautiful.fg_normal .. '88'
 }
 
 -- User fullname widget.

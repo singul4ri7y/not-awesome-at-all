@@ -5,55 +5,55 @@ local icons = require('theme.icons')
 
 local tags = {
 	{
-		type = 'internet',
-		icon = icons.brave,
+		type        = 'internet',
+		icon        = icons.brave,
 		default_app = apps.browser,
-		gap = beautiful.useless_gap
+		gap         = beautiful.useless_gap
 	},
 
 	{
-		type = 'code',
-		icon = icons.code,
+		type        = 'code',
+		icon        = icons.code,
 		default_app = apps.dev,
-		gap = beautiful.useless_gap
+		gap         = beautiful.useless_gap
 	},
 
 	{
-		type = 'social',
-		icon = icons.social,
+		type        = 'social',
+		icon        = icons.social,
 		default_app = apps.social,
-		gap = beautiful.useless_gap
+		gap         = beautiful.useless_gap
 	},
 
 	{
-		type = 'games',
-		icon = icons.game,
+		type        = 'games',
+		icon        = icons.game,
 		default_app = apps.game,
-		gap = beautiful.no_gap,
-		layout = awful.layout.suit.floating
+		gap         = beautiful.no_gap,
+		layout      = awful.layout.suit.floating
 	},
 
 	{
-		type = 'files',
-		icon = icons.folder,
+		type        = 'files',
+		icon        = icons.folder,
 		default_app = apps.files,
-		gap = beautiful.useless_gap,
+		gap         = beautiful.useless_gap,
 	},
 
 	{
-		type = 'sandbox',
-		icon = icons.sandbox,
+		type        = 'sandbox',
+		icon        = icons.sandbox,
 		default_app = apps.sandbox,
-		layout = awful.layout.suit.max.fullscreen,
-		gap = beautiful.no_gap
+		layout      = awful.layout.suit.max.fullscreen,
+		gap         = beautiful.no_gap
 	},
 
 	{
-		type = 'multimedia',
-		icon = icons.media,
+		type        = 'multimedia',
+		icon        = icons.media,
 		default_app = apps.media,
-		layout = awful.layout.suit.max,
-		gap = beautiful.no_gap
+		layout      = awful.layout.suit.max,
+		gap         = beautiful.no_gap
 	},
 
 	-- {
@@ -65,11 +65,11 @@ local tags = {
 	-- },
 
 	{
-		type = 'experiments',
-		icon = icons.lab,
+		type        = 'experiments',
+		icon        = icons.lab,
 		default_app = apps.terminal,
-		gap = beautiful.useless_gap,
-		layout = awful.layout.suit.floating
+		gap         = beautiful.useless_gap,
+		layout      = awful.layout.suit.floating
 	}
 }
 

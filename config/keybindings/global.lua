@@ -111,6 +111,13 @@ awful.keyboard.append_global_keybindings {
 	          { description = 'Go back', group = 'Tag/Workspace' }),
 }
 
+-- Tags related mousebindings.
+
+awful.mouse.append_global_mousebindings {
+	awful.button({}, 9, awful.tag.viewprev),
+	awful.button({}, 8, awful.tag.viewnext)
+}
+
 -- Focus related keybindings.
 
 awful.keyboard.append_global_keybindings {

@@ -1,5 +1,6 @@
 local id = {
-	username = os.getenv('USER')
+	username = os.getenv('USER'),
+	profile  = config_dir .. 'config/user/assets/profile.jpg'
 }
 
 -- Get the user full name.

@@ -22,6 +22,19 @@ local taglist_buttons = gears.table.join(
 		end
 	end),
 
+	-- Extra mouse button actions, mostly found in
+	-- gaming mice.
+
+	awful.button({}, 9, function(t)
+		awful.tag.viewprev(t.screen)
+	end),
+
+	awful.button({}, 8, function(t)
+		awful.tag.viewnext(t.screen)
+	end),
+
+	-- The mouse scroll bar actions.
+
 	awful.button({}, 4, function(t)
 		awful.tag.viewprev(t.screen)
 	end),

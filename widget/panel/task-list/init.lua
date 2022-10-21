@@ -202,13 +202,15 @@ local function list_update(w, buttons, label, data, objects, args)
 				:gsub('&quot;', '"')
 				:gsub('&apos;', "'")
 				:gsub('&amp;', '&')
+				:gsub('%%%%', '%%')
 
 			text = text:gsub('>(.-)<', '>' .. base_text:sub(1, utf8.offset(base_text, 23) - 1)
 				:gsub('&', '&amp;')
 				:gsub('<', '&lt;')
 				:gsub('>', '&gt;')
 				:gsub('"', '&quot;')
-				:gsub("'", '&apos;') .. '...<')
+				:gsub("'", '&apos;')
+				:gsub('%%', '%%%%') .. '...<')
 
 			-- Replace the XML/HTML specific symbol's text representation
 			-- with actual symbol representations.
